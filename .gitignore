@@ -1,0 +1,37 @@
+# Secrets and internal context
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+internal/
+confidential/
+company/
+clientes/
+customers/
+
+# Official/proprietary course material
+*.pdf
+*.pptx
+*.docx
+*.xlsx
+exam-guide/
+course-downloads/
+real-exam-questions/
+
+# Local generated files
+node_modules/
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+dist/
+build/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

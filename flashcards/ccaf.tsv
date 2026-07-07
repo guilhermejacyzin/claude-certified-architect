@@ -1,0 +1,16 @@
+Front	Back
+Qual é o sinal correto para continuar um loop agentic com tool?	`stop_reason = "tool_use"`; execute a tool, anexe o resultado ao histórico e chame o modelo novamente.
+Qual é o sinal correto para encerrar o loop?	`stop_reason = "end_turn"`.
+Subagente herda automaticamente contexto do coordenador?	Não. O contexto relevante deve ser passado explicitamente.
+Quando usar hook em vez de prompt?	Quando a regra exige garantia determinística, auditoria ou bloqueio programático.
+MCP tool vs resource?	Tool executa ação; resource expõe contexto/dados para leitura.
+Erro estruturado de tool deve conter o quê?	Tipo/categoria, mensagem, retryable, detalhes seguros e próxima ação.
+Quando usar plan mode?	Mudanças complexas, multiarquivo, arquiteturais ou com tradeoffs relevantes.
+Quando usar direct execution?	Tarefa simples, bem delimitada e de baixo risco.
+Como reduzir falso positivo em review?	Critérios explícitos, severidade, evidência, escopo e schema de saída.
+Por que usar nullable em schema?	Para representar ausência real de informação sem induzir alucinação.
+Quando usar Message Batches?	Alto volume, latência tolerável e itens independentes com `custom_id`.
+Qual risco de contexto longo?	Perda no meio, atenção diluída e esquecimento de detalhes críticos.
+Como preservar proveniência?	Mapear cada claim para fonte, data, trecho/evidência e incerteza.
+Quando escalonar?	Política ambígua, baixa confiança, pedido do usuário, risco alto ou incapacidade de progredir.
+Anti-pattern de tool design?	Tool genérica, descrição vaga, schema amplo demais e ações destrutivas sem gate.
