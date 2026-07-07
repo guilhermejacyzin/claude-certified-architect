@@ -1,8 +1,8 @@
-# Linguagem Simples Para Pessoas Não Técnicas
+# Exemplos Simplificados
 
-Este arquivo traduz os conceitos principais para uma linguagem de negócio. Use
-quando precisar explicar a certificação para gestores, pessoas de produto,
-consultores, PMs, áreas comerciais ou colegas que ainda não programam.
+Este arquivo traduz os conceitos principais para uma linguagem mais direta e
+fácil de explicar. Use como apoio para revisar rapidamente os padrões de decisão
+e comunicar os conceitos com clareza.
 
 ## Ideia central
 
@@ -276,7 +276,7 @@ Precisamos entender:
 - quando automatizar e quando escalar para humano.
 ```
 
-## Perguntas para treinar com não técnicos
+## Perguntas para treinar explicação simples
 
 1. Qual ação você deixaria a IA fazer sozinha?
 2. Qual ação exigiria aprovação humana?
