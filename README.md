@@ -1,94 +1,240 @@
 # Claude Certified Architect - Foundations PT-BR
 
-Repositório de estudos em português para a certificação **Claude Certified
-Architect - Foundations**.
+Curso aberto em português para estudar a certificação **Claude Certified
+Architect - Foundations**, com foco em arquitetura de soluções com Claude,
+Agent SDK, Claude Code, Model Context Protocol (MCP), structured output,
+confiabilidade e workflows de produção.
 
-Este repo é uma trilha prática: resumo por domínio, plano de estudos, labs,
-checklists e simulados autorais. Ele não substitui os cursos oficiais nem o
-exam guide oficial.
+O objetivo é que este repositório funcione como uma formação textual completa:
+do básico até o nível especialista. A proposta é permitir estudo profundo mesmo
+sem depender dos vídeos, usando cursos oficiais, documentação e materiais
+comunitários apenas como reforço e validação.
 
-## Regras de uso
+## O Que Este Curso Ensina
 
-- Não publique informações internas, nomes de clientes, tokens, credenciais,
-  exemplos reais de projetos corporativos ou trechos de materiais confidenciais.
-- Não commite o PDF oficial do exam guide, dumps de questões reais ou conteúdo
-  copiado de cursos.
-- Use repositórios comunitários como treino, não como fonte de verdade.
-- Priorize documentação oficial da Anthropic, MCP e prática hands-on.
+Ao final da trilha, você deve conseguir:
 
-## Estrutura
+- explicar como funciona um agentic loop;
+- projetar agentes que usam tools com segurança;
+- desenhar integrações MCP com tools, resources e prompts;
+- configurar Claude Code para projetos, times e CI/CD;
+- criar prompts com critérios explícitos;
+- usar JSON Schema e structured output;
+- validar e corrigir extrações com retry loops;
+- decidir quando usar subagentes;
+- preservar contexto, fontes, decisões e lacunas;
+- criar handoffs humanos claros;
+- reduzir falsos positivos em reviews automatizados;
+- responder questões scenario-based com raciocínio arquitetural.
 
-- `docs/00-mapa-exame.md`: domínios, pesos e objetivos em PT-BR.
+## Para Quem Serve
+
+Este material foi escrito para:
+
+- arquitetos de solução;
+- desenvolvedores;
+- tech leads;
+- consultores de IA;
+- pessoas trabalhando com automação e agentes;
+- equipes que querem nivelar conhecimento antes da certificação;
+- quem precisa entender Claude em cenários reais de produção.
+
+O texto usa três camadas de explicação:
+
+- explicação normal, para entender a ideia;
+- explicação técnica, para dominar o que cai na prova;
+- exemplo simplificado, para fixar e comunicar o conceito com clareza.
+
+## Caminho Principal
+
+Comece pela pasta `course/`. Ela organiza o conteúdo como curso formal.
+
+| Etapa | Arquivo | Resultado esperado |
+|---|---|---|
+| Orientação | `course/00-como-usar-o-curso.md` | Entender método, rotina e critérios |
+| Fundamentos | `course/01-fundamentos.md` | Dominar vocabulário e conceitos-base |
+| Praticante | `course/02-praticante.md` | Aplicar tools, schemas e Claude Code |
+| Arquiteto | `course/03-arquiteto.md` | Desenhar sistemas agentic completos |
+| Especialista | `course/04-especialista.md` | Tomar decisões de produção e escala |
+| Avaliação | `course/05-avaliacoes-rubricas-capstone.md` | Medir prontidão e executar capstone |
+
+## Estrutura Do Repositório
+
+### Curso
+
+- `course/README.md`: visão geral da formação.
+- `course/00-como-usar-o-curso.md`: método de estudo, rotina e diagnóstico.
+- `course/01-fundamentos.md`: conceitos iniciais de agentes, MCP, prompts e contexto.
+- `course/02-praticante.md`: aplicação prática com tools, Claude Code e schemas.
+- `course/03-arquiteto.md`: desenho de sistemas completos.
+- `course/04-especialista.md`: tradeoffs avançados e decisões de produção.
+- `course/05-avaliacoes-rubricas-capstone.md`: rubricas e projeto final.
+
+### Apostila Profunda
+
+- `docs/00-mapa-exame.md`: domínios, pesos e objetivos.
 - `docs/01-trilha-17-dias.md`: plano intensivo até 24/07/2026.
-- `docs/02-recursos-externos.md`: curadoria crítica de links e repositórios.
-- `docs/03-guia-por-dominio.md`: guia de estudo por domínio.
-- `docs/04-sintese-comunitaria-ptbr.md`: síntese própria em PT-BR dos padrões
-  recorrentes em materiais públicos.
-- `docs/05-roteiro-publicacao-e-contribuicao.md`: regras para manter o repo
-  público, útil e seguro.
-- `docs/10-curso-completo-visao-geral.md`: início da apostila completa.
-- `docs/11-modulo-agentic-architecture.md`: módulo profundo de arquitetura
-  agentic.
-- `docs/12-modulo-mcp-tool-design.md`: módulo profundo de MCP e tools.
-- `docs/13-modulo-claude-code-workflows.md`: módulo profundo de Claude Code.
-- `docs/14-modulo-prompt-structured-output.md`: módulo profundo de structured
-  output.
-- `docs/15-modulo-context-reliability.md`: módulo profundo de contexto e
-  confiabilidade.
-- `docs/16-cenarios-integrados.md`: cenários integrados para treino final.
-- `docs/17-exemplos-simplificados.md`: exemplos simplificados para explicar os
-  conceitos com clareza.
-- `labs/`: exercícios práticos alinhados aos domínios.
-- `practice/`: questões simuladas autorais.
-- `flashcards/`: cartões TSV para revisão espaçada.
-- `.claude/`: configuração opcional para estudar com Claude Code.
+- `docs/02-recursos-externos.md`: curadoria de links e repositórios.
+- `docs/03-guia-por-dominio.md`: guia de revisão por domínio.
+- `docs/04-sintese-comunitaria-ptbr.md`: síntese própria dos padrões comunitários.
+- `docs/10-curso-completo-visao-geral.md`: visão geral da apostila completa.
+- `docs/11-modulo-agentic-architecture.md`: arquitetura agentic e orquestração.
+- `docs/12-modulo-mcp-tool-design.md`: MCP e design de tools.
+- `docs/13-modulo-claude-code-workflows.md`: Claude Code, rules, skills e CI/CD.
+- `docs/14-modulo-prompt-structured-output.md`: prompt engineering e schemas.
+- `docs/15-modulo-context-reliability.md`: contexto, proveniência e confiabilidade.
+- `docs/16-cenarios-integrados.md`: cenários integrados de treino.
+- `docs/17-exemplos-simplificados.md`: exemplos simplificados dos principais conceitos.
+- `docs/18-guia-tri-camada-conceitos.md`: explicação normal, técnica e simplificada.
+- `docs/19-playbooks-passo-a-passo.md`: procedimentos práticos para cenários.
 
-## Como estudar
+### Exemplos Passo a Passo
 
-1. Leia `docs/00-mapa-exame.md`.
-2. Siga `docs/01-trilha-17-dias.md`.
-3. Faça os labs antes de simulados.
-4. Use `practice/questoes-simuladas.md` para treinar julgamento arquitetural.
-5. Revise erros por domínio, não por número total de acertos.
+A pasta `examples/` traz pelo menos 10 exemplos detalhados por capacidade
+principal:
 
-## Material Comunitário
+- `examples/01-agentic-orchestration-10-exemplos.md`
+- `examples/02-mcp-tools-10-exemplos.md`
+- `examples/03-claude-code-10-exemplos.md`
+- `examples/04-structured-output-10-exemplos.md`
+- `examples/05-context-reliability-10-exemplos.md`
 
-Este repo inclui links, sínteses e adaptações próprias de materiais públicos.
-Quando há licença compatível, a atribuição fica em `THIRD_PARTY_NOTICES.md`.
-Quando um repo público não declara licença, usamos apenas link e resumo em
-linguagem própria.
+Esses exemplos seguem sempre a mesma lógica: situação, passo a passo, decisão
+correta e exemplo simplificado.
 
-Não há dumps de prova, cópia do PDF oficial, nem conteúdo integral de cursos.
+### Labs
 
-## Peso dos domínios
+A pasta `labs/` contém exercícios práticos:
+
+- agentic loop;
+- MCP tool design;
+- configuração Claude Code;
+- structured output;
+- gestão de contexto e confiabilidade.
+
+Use os labs depois de estudar cada módulo. O objetivo é transformar leitura em
+prática.
+
+### Simulados
+
+A pasta `practice/` contém questões autorais:
+
+- `practice/questoes-simuladas.md`: questões introdutórias.
+- `practice/simulado-02-arquitetura.md`: arquitetura e tradeoffs.
+- `practice/questoes-comentadas-avancadas.md`: questões com raciocínio completo.
+- `practice/simulado-bilingue-30-questoes.md`: 30 questões em inglês com tradução
+  PT-BR, organizadas por complexidade.
+
+Os simulados foram feitos para treinar julgamento. A certificação tende a cobrar
+cenários realistas, não memorização de frases.
+
+### Flashcards
+
+- `flashcards/ccaf.tsv`: cartões para revisão espaçada.
+
+Sugestão: importe em Anki, RemNote, Quizlet ou outro sistema de repetição
+espaçada.
+
+### Claude Code
+
+- `.claude/CLAUDE.md`: instruções para usar Claude Code estudando este repo.
+- `.claude/skills/ccaf-study/SKILL.md`: skill de estudo para gerar questões,
+  revisar domínios e explicar tradeoffs.
+
+## Domínios Da Certificação
 
 | Domínio | Peso |
 |---|---:|
-| Arquitetura Agentic e Orquestração | 27% |
-| Design de Ferramentas e Integração MCP | 18% |
-| Configuração e Workflows do Claude Code | 20% |
-| Engenharia de Prompt e Saída Estruturada | 20% |
-| Gestão de Contexto e Confiabilidade | 15% |
+| Agentic Architecture & Orchestration | 27% |
+| Tool Design & MCP Integration | 18% |
+| Claude Code Configuration & Workflows | 20% |
+| Prompt Engineering & Structured Output | 20% |
+| Context Management & Reliability | 15% |
 
-## Estratégia
+## Como Estudar
 
-O exame tende a cobrar decisões de arquitetura em cenários realistas. A pergunta
-central não é "o que Claude consegue fazer?", mas:
+### Roteiro Rápido
 
-- onde fica a responsabilidade: modelo, código, tool, hook, humano ou workflow?
-- qual decisão reduz erro, ambiguidade e risco operacional?
-- quando usar autonomia e quando exigir validação determinística?
-- como preservar contexto, proveniência e auditabilidade?
+1. Leia `course/00-como-usar-o-curso.md`.
+2. Leia `docs/00-mapa-exame.md`.
+3. Faça 10 questões do simulado bilíngue.
+4. Estude o nível em que teve mais dificuldade.
+5. Faça o lab correspondente.
+6. Registre erros em `study-log.md`.
+
+### Roteiro Completo
+
+1. Complete `course/01-fundamentos.md`.
+2. Faça exemplos de `examples/01-agentic-orchestration-10-exemplos.md`.
+3. Complete `course/02-praticante.md`.
+4. Faça os labs de MCP, Claude Code e structured output.
+5. Complete `course/03-arquiteto.md`.
+6. Resolva cenários integrados.
+7. Complete `course/04-especialista.md`.
+8. Faça `practice/simulado-bilingue-30-questoes.md`.
+9. Faça `practice/questoes-comentadas-avancadas.md`.
+10. Execute o capstone em `course/05-avaliacoes-rubricas-capstone.md`.
+
+## Estratégia De Prova
+
+O exame tende a perguntar: "qual decisão é mais correta em produção?"
+
+Ao responder, pense:
+
+- o risco exige regra determinística?
+- a resposta precisa de schema?
+- a action muda estado?
+- a tool está bem delimitada?
+- o subagente recebeu contexto?
+- a fonte foi preservada?
+- há baixa confiança?
+- precisa escalar para humano?
+- o contexto pode estar obsoleto?
+
+Uma boa resposta normalmente distribui responsabilidades assim:
+
+| Responsável | O que deve fazer |
+|---|---|
+| Modelo | raciocinar, escolher próxima ação, sintetizar |
+| Tool/MCP | consultar ou executar ação externa |
+| Código/hook | bloquear, validar, normalizar e auditar |
+| Schema | garantir formato e reduzir ambiguidade |
+| Humano | aprovar risco, exceção ou baixa confiança |
 
 ## Critério De Qualidade
 
-O material deve ser detalhado o suficiente para que uma pessoa consiga estudar
-sem assistir aos vídeos, usando os vídeos apenas como reforço opcional. Cada
-módulo profundo inclui teoria, passo a passo, exemplos, anti-patterns,
-checklists e exercícios.
+Este curso deve ser detalhado o suficiente para uma pessoa estudar sem depender
+dos vídeos. Cada módulo busca incluir:
 
-## Status
+- teoria;
+- passo a passo;
+- exemplos práticos;
+- exemplo simplificado;
+- anti-patterns;
+- critérios de prova;
+- atividade;
+- avaliação.
 
-Repo inicial criado para estudo privado. Próximo passo recomendado: rodar um
-diagnóstico com as questões simuladas e marcar domínio fraco em
-`study-log.md`.
+## Materiais Externos
+
+O repositório inclui curadoria e sínteses próprias baseadas em documentação
+oficial e materiais públicos da comunidade. As referências e atribuições ficam em:
+
+- `docs/02-recursos-externos.md`
+- `THIRD_PARTY_NOTICES.md`
+
+## Próximo Passo Recomendado
+
+Comece por:
+
+```text
+course/00-como-usar-o-curso.md
+```
+
+Depois faça o diagnóstico:
+
+```text
+practice/simulado-bilingue-30-questoes.md
+```
+
+Use o resultado para decidir qual módulo estudar primeiro.
