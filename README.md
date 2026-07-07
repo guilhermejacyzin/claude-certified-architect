@@ -100,6 +100,9 @@ Comece pela pasta `course/`. Ela organiza o conteúdo como curso formal.
 - `docs/17-exemplos-simplificados.md`: exemplos simplificados dos principais conceitos.
 - `docs/18-guia-tri-camada-conceitos.md`: explicação normal, técnica e simplificada.
 - `docs/19-playbooks-passo-a-passo.md`: procedimentos práticos para cenários.
+- `docs/20-estimativa-custos-token.md`: estimativa de consumo de tokens em USD e
+  BRL para executar exemplos, labs, aulas, drills e simulados com margem de
+  estudo.
 
 ### Exemplos Passo a Passo
 
@@ -114,6 +117,11 @@ principal:
 
 Esses exemplos seguem sempre a mesma lógica: situação, passo a passo, decisão
 correta e exemplo simplificado.
+
+Para planejar orçamento de prática, consulte
+`docs/20-estimativa-custos-token.md`. Ele estima custo em dólares e reais para
+cada um dos 50 exemplos, usando preço atual de tokens, câmbio USD/BRL e margem
+para repetir execuções durante o estudo.
 
 ### Labs
 
