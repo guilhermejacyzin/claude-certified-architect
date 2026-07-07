@@ -60,6 +60,19 @@ Comece pela pasta `course/`. Ela organiza o conteúdo como curso formal.
 
 ## Estrutura Do Repositório
 
+### Trilha Academy Expandida
+
+- `academy/README.md`: mapa dos primeiros conteúdos visíveis no learning path.
+- `academy/01-introducao-agent-skills.md`: Agent Skills em profundidade.
+- `academy/02-building-with-claude-api.md`: Claude API, prompts, evals, tools,
+  RAG e features.
+- `academy/03-model-context-protocol.md`: MCP tools, resources, prompts,
+  clients e inspector.
+- `academy/04-claude-code-em-acao.md`: Claude Code, MCP servers, workflows e
+  agents.
+- `academy/05-matriz-cobertura-learning-path.md`: matriz tópico a tópico dos
+  conteúdos visíveis no learning path, com onde estudar e como praticar.
+
 ### Curso
 
 - `course/README.md`: visão geral da formação.
@@ -115,6 +128,18 @@ A pasta `labs/` contém exercícios práticos:
 Use os labs depois de estudar cada módulo. O objetivo é transformar leitura em
 prática.
 
+### Drills
+
+A pasta `drills/` contém treino repetitivo para fixação rápida:
+
+- `drills/README.md`: como usar os drills.
+- `drills/01-drills-academy.md`: classificação de artefatos, tool/resource/prompt,
+  erros estruturados, evals, RAG, Claude Code e cenários integrados.
+
+Use os drills quando terminar uma seção da Academy. Eles foram feitos para
+estressar reconhecimento de padrões: escolher entre prompt, tool, resource,
+hook, skill, command, structured output e eval sem depender de memorização rasa.
+
 ### Simulados
 
 A pasta `practice/` contém questões autorais:
@@ -124,6 +149,9 @@ A pasta `practice/` contém questões autorais:
 - `practice/questoes-comentadas-avancadas.md`: questões com raciocínio completo.
 - `practice/simulado-bilingue-30-questoes.md`: 30 questões em inglês com tradução
   PT-BR, organizadas por complexidade.
+- `practice/simulado-academy-mcp-claude-code-40-questoes.md`: 40 questões
+  bilíngues focadas em MCP, Claude Code, hooks, SDK, GitHub, context control,
+  RAG, evals e workflows.
 
 Os simulados foram feitos para treinar julgamento. A certificação tende a cobrar
 cenários realistas, não memorização de frases.
@@ -172,8 +200,9 @@ espaçada.
 6. Resolva cenários integrados.
 7. Complete `course/04-especialista.md`.
 8. Faça `practice/simulado-bilingue-30-questoes.md`.
-9. Faça `practice/questoes-comentadas-avancadas.md`.
-10. Execute o capstone em `course/05-avaliacoes-rubricas-capstone.md`.
+9. Faça `practice/simulado-academy-mcp-claude-code-40-questoes.md`.
+10. Faça `practice/questoes-comentadas-avancadas.md`.
+11. Execute o capstone em `course/05-avaliacoes-rubricas-capstone.md`.
 
 ## Estratégia De Prova
 
