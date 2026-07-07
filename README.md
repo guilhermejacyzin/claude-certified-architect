@@ -36,6 +36,8 @@ exam guide oficial.
 - `docs/15-modulo-context-reliability.md`: módulo profundo de contexto e
   confiabilidade.
 - `docs/16-cenarios-integrados.md`: cenários integrados para treino final.
+- `docs/17-linguagem-simples-nao-tecnicos.md`: explicações simples para
+  pessoas de negócio/não técnicas.
 - `labs/`: exercícios práticos alinhados aos domínios.
 - `practice/`: questões simuladas autorais.
 - `flashcards/`: cartões TSV para revisão espaçada.

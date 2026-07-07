@@ -13,6 +13,12 @@ Um agente deve resolver pedidos de suporte envolvendo:
 - contestação;
 - pedido de exceção.
 
+### Explicação simples
+
+Pense em um atendente virtual. Ele pode consultar dados e preparar uma solução,
+mas não pode devolver dinheiro fora da política só porque "parece certo". A
+arquitetura precisa colocar travas para ações sensíveis.
+
 Tools:
 
 - `get_customer`
@@ -47,6 +53,12 @@ Tools:
 
 Sistema pesquisa tema complexo e produz relatório com citações.
 
+### Explicação simples
+
+É como montar uma equipe de pesquisa. Uma pessoa busca fontes, outra lê
+documentos, outra escreve e outra revisa. O coordenador garante que ninguém
+trabalhe sem contexto e que toda conclusão tenha fonte.
+
 Subagentes:
 
 - web search;
@@ -79,6 +91,11 @@ Subagentes:
 
 Time quer revisar PRs automaticamente.
 
+### Explicação simples
+
+A IA atua como um revisor auxiliar de código. Ela não deve bloquear o time por
+gosto pessoal. Ela deve apontar problemas reais, com evidência e sugestão clara.
+
 ### Arquitetura esperada
 
 1. CI chama Claude Code em modo não interativo.
@@ -103,6 +120,11 @@ Time quer revisar PRs automaticamente.
 ### Situação
 
 Sistema extrai dados de documentos heterogêneos e envia para downstream.
+
+### Explicação simples
+
+A IA lê documentos e preenche um formulário. Se uma informação não aparece no
+documento, ela deve dizer que não encontrou, não inventar.
 
 ### Arquitetura esperada
 
@@ -130,6 +152,11 @@ Sistema extrai dados de documentos heterogêneos e envia para downstream.
 
 Agente ajuda devs em sistema legado.
 
+### Explicação simples
+
+Antes de mudar um sistema grande, a IA precisa investigar como um analista:
+mapear, procurar pistas, ler partes relevantes, anotar fatos e só então mexer.
+
 ### Arquitetura esperada
 
 1. Entender objetivo.
@@ -154,6 +181,11 @@ Agente ajuda devs em sistema legado.
 ### Situação
 
 Você precisa integrar Claude a backend via MCP.
+
+### Explicação simples
+
+MCP é como uma central de botões seguros para a IA. Alguns botões só consultam,
+outros executam ações. Botões perigosos precisam de trava, confirmação e registro.
 
 ### Arquitetura esperada
 
