@@ -1,0 +1,6 @@
+* [Começar](course/00-como-usar-o-curso.md)
+* [Mapa](docs/00-mapa-exame.md)
+* [Academy](academy/README.md)
+* [Exemplos](examples/01-agentic-orchestration-10-exemplos.md)
+* [Simulados](practice/simulado-bilingue-30-questoes.md)
+* [GitHub](https://github.com/guilhermejacyzin/claude-certified-architect)

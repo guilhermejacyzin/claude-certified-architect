@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Curso navegável em PT-BR para estudar Claude Certified Architect - Foundations."
+    />
+    <title>Claude Certified Architect PT-BR</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
+    <link rel="stylesheet" href="assets/docsify-theme.css" />
+  </head>
+  <body>
+    <div id="app">Carregando curso...</div>
+    <script>
+      window.$docsify = {
+        name: 'Claude Certified Architect PT-BR',
+        repo: 'https://github.com/guilhermejacyzin/claude-certified-architect',
+        homepage: 'README.md',
+        loadSidebar: true,
+        loadNavbar: true,
+        coverpage: true,
+        onlyCover: false,
+        subMaxLevel: 3,
+        auto2top: true,
+        relativePath: true,
+        mergeNavbar: true,
+        themeColor: '#0f766e',
+        alias: {
+          '/.*/_sidebar.md': '/_sidebar.md',
+          '/.*/_navbar.md': '/_navbar.md'
+        },
+        search: {
+          maxAge: 86400000,
+          paths: 'auto',
+          placeholder: 'Buscar no curso',
+          noData: 'Nada encontrado',
+          depth: 6,
+          hideOtherSidebarContent: false
+        },
+        copyCode: {
+          buttonText: 'Copiar',
+          errorText: 'Erro',
+          successText: 'Copiado'
+        },
+        pagination: {
+          previousText: 'Anterior',
+          nextText: 'Próximo',
+          crossChapter: true,
+          crossChapterText: true
+        },
+        plugins: [
+          function navigationHints(hook) {
+            hook.doneEach(function () {
+              var links = document.querySelectorAll('.markdown-section a[href$=".md"]');
+              links.forEach(function (link) {
+                if (!link.getAttribute('target') && !link.href.includes(location.host)) {
+                  link.setAttribute('target', '_blank');
+                  link.setAttribute('rel', 'noopener noreferrer');
+                }
+              });
+            });
+          }
+        ]
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2/dist/docsify-copy-code.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+  </body>
+</html>

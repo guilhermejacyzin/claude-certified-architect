@@ -10,6 +10,32 @@ do básico até o nível especialista. A proposta é permitir estudo profundo me
 sem depender dos vídeos, usando cursos oficiais, documentação e materiais
 comunitários apenas como reforço e validação.
 
+## Site Navegável
+
+Este repositório também foi preparado como um site de estudo via GitHub Pages:
+
+```text
+https://guilhermejacyzin.github.io/claude-certified-architect/
+```
+
+O site oferece menu lateral, busca, capa de entrada, trilha visual, navegação por
+módulos e leitura direta dos arquivos Markdown. Se o GitHub Pages ainda não
+estiver ativo, habilite **Settings > Pages > GitHub Actions** no repositório.
+
+Para abrir localmente:
+
+```powershell
+python -m http.server 8080
+```
+
+Depois acesse:
+
+```text
+http://localhost:8080
+```
+
+O guia completo de navegação está em `docs/21-guia-navegacao-site.md`.
+
 ## O Que Este Curso Ensina
 
 Ao final da trilha, você deve conseguir:
@@ -103,6 +129,8 @@ Comece pela pasta `course/`. Ela organiza o conteúdo como curso formal.
 - `docs/20-estimativa-custos-token.md`: estimativa de consumo de tokens em USD e
   BRL para executar exemplos, labs, aulas, drills e simulados com margem de
   estudo.
+- `docs/21-guia-navegacao-site.md`: instruções para usar o repositório como site
+  navegável, com busca, menu lateral, Pages e servidor local.
 
 ### Exemplos Passo a Passo
 
