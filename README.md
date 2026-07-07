@@ -22,6 +22,20 @@ exam guide oficial.
 - `docs/01-trilha-17-dias.md`: plano intensivo até 24/07/2026.
 - `docs/02-recursos-externos.md`: curadoria crítica de links e repositórios.
 - `docs/03-guia-por-dominio.md`: guia de estudo por domínio.
+- `docs/04-sintese-comunitaria-ptbr.md`: síntese própria em PT-BR dos padrões
+  recorrentes em materiais públicos.
+- `docs/05-roteiro-publicacao-e-contribuicao.md`: regras para manter o repo
+  público, útil e seguro.
+- `docs/10-curso-completo-visao-geral.md`: início da apostila completa.
+- `docs/11-modulo-agentic-architecture.md`: módulo profundo de arquitetura
+  agentic.
+- `docs/12-modulo-mcp-tool-design.md`: módulo profundo de MCP e tools.
+- `docs/13-modulo-claude-code-workflows.md`: módulo profundo de Claude Code.
+- `docs/14-modulo-prompt-structured-output.md`: módulo profundo de structured
+  output.
+- `docs/15-modulo-context-reliability.md`: módulo profundo de contexto e
+  confiabilidade.
+- `docs/16-cenarios-integrados.md`: cenários integrados para treino final.
 - `labs/`: exercícios práticos alinhados aos domínios.
 - `practice/`: questões simuladas autorais.
 - `flashcards/`: cartões TSV para revisão espaçada.
@@ -34,6 +48,15 @@ exam guide oficial.
 3. Faça os labs antes de simulados.
 4. Use `practice/questoes-simuladas.md` para treinar julgamento arquitetural.
 5. Revise erros por domínio, não por número total de acertos.
+
+## Material Comunitário
+
+Este repo inclui links, sínteses e adaptações próprias de materiais públicos.
+Quando há licença compatível, a atribuição fica em `THIRD_PARTY_NOTICES.md`.
+Quando um repo público não declara licença, usamos apenas link e resumo em
+linguagem própria.
+
+Não há dumps de prova, cópia do PDF oficial, nem conteúdo integral de cursos.
 
 ## Peso dos domínios
 
@@ -54,6 +77,13 @@ central não é "o que Claude consegue fazer?", mas:
 - qual decisão reduz erro, ambiguidade e risco operacional?
 - quando usar autonomia e quando exigir validação determinística?
 - como preservar contexto, proveniência e auditabilidade?
+
+## Critério De Qualidade
+
+O material deve ser detalhado o suficiente para que uma pessoa consiga estudar
+sem assistir aos vídeos, usando os vídeos apenas como reforço opcional. Cada
+módulo profundo inclui teoria, passo a passo, exemplos, anti-patterns,
+checklists e exercícios.
 
 ## Status
 

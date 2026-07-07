@@ -1,0 +1,27 @@
+name: Content Safety Check
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  content-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for sensitive/proprietary patterns
+        run: |
+          set -euo pipefail
+          if grep -RInE 'api[_-]?key\s*=|password\s*=|Bearer\s+[A-Za-z0-9._~+/-]+|token\s*=' . \
+            --exclude-dir=.git \
+            --exclude=content-check.yml; then
+            echo "Sensitive or prohibited content pattern found."
+            exit 1
+          fi
+      - name: Ensure official/proprietary binaries are not committed
+        run: |
+          set -euo pipefail
+          if find . -type f \( -iname '*.pdf' -o -iname '*.pptx' -o -iname '*.docx' -o -iname '*.xlsx' \) | grep .; then
+            echo "Do not commit official PDFs, slides, docs, or spreadsheets."
+            exit 1
+          fi
