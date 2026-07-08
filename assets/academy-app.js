@@ -270,8 +270,7 @@
 
     els.lessonSelect.disabled = false;
     els.lessonSelect.innerHTML = lessons.map(function (lesson, index) {
-      var module = getModule(lesson.module);
-      var label = pad(index + 1) + ' - ' + lesson.title + ' · ' + module.short + ' · ' + lesson.duration;
+      var label = pad(index + 1) + ' - ' + lesson.title;
       return '<option value="' + escapeHtml(lesson.id) + '"' + (lesson.id === state.activeLessonId ? ' selected' : '') + '>' + escapeHtml(label) + '</option>';
     }).join('');
   }
