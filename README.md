@@ -29,6 +29,9 @@ traz objetivo, explicação normal, explicação técnica ampliada, exemplo
 simplificado, passo a passo, prática guiada, critério de prova, seção de
 arquitetura com fluxograma, gráfico de foco, comparação de alternativas,
 protocolo de treino e fontes oficiais/acadêmicas de aprofundamento.
+As aulas mais criticas para prova agora tambem possuem aprofundamento manual
+especifico: RAG, MCP tools/resources/prompts, tool use, structured outputs,
+evals, prompt caching, hooks e Claude Code SDK.
 
 Também existe uma biblioteca Markdown preservada em `docsify.html`. Ela serve
 para leitura longa dos arquivos do repositório com sidebar, busca e paginação.
@@ -175,6 +178,9 @@ Comece pela pasta `course/`. Ela organiza o conteúdo como curso formal.
 - `docs/27-modelo-aula-densa-fontes.md`: padrão de densidade por aula, com
   fluxogramas, critérios de pronto e bibliografia técnica/acadêmica usada na
   expansão da academia.
+- `docs/28-aulas-criticas-aprofundadas.md`: aprofundamento manual das aulas
+  mais importantes para a prova, com conceito, fluxo, passo a passo, exemplo
+  simplificado, pegadinhas, criterio de dominio e fontes.
 
 ### Exemplos Passo a Passo
 

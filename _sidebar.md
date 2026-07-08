@@ -46,6 +46,7 @@
   * [Segurança Agentic AI](docs/25-matriz-seguranca-agentic-ai.md)
   * [QA, engenharia, UX e ensino](docs/26-plano-qa-engenharia-ux-ensino.md)
   * [Modelo de aula densa](docs/27-modelo-aula-densa-fontes.md)
+  * [Aulas criticas aprofundadas](docs/28-aulas-criticas-aprofundadas.md)
 
 * Exemplos passo a passo
   * [Agentic orchestration](examples/01-agentic-orchestration-10-exemplos.md)

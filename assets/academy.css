@@ -596,6 +596,15 @@ select {
   margin: 0 0 12px;
 }
 
+.manual-density-note {
+  background: #f5f7ff;
+  border: 1px solid #dfe5ff;
+  border-radius: 8px;
+  color: #312e81;
+  font-weight: 850;
+  padding: 12px 14px;
+}
+
 .expanded-copy p:last-child {
   margin-bottom: 0;
 }

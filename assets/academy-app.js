@@ -368,6 +368,7 @@
       '<div class="section-body expanded-body">' +
         '<section class="expanded-copy">' +
           '<h3>Explicação aprofundada da aula</h3>' +
+          (profile.manualTitle ? '<p class="manual-density-note">' + escapeHtml(profile.manualTitle) + '</p>' : '') +
           thesis +
         '</section>' +
         '<section class="concept-flow" aria-label="Fluxograma de decisão da aula">' +
@@ -409,6 +410,8 @@
 
   function getExpandedLessonProfile(lesson, module) {
     var lens = getTopicLens(lesson);
+    var criticalPack = getCriticalLessonPack(lesson);
+    if (criticalPack) return criticalPack;
     var moduleFrame = getModuleFrame(lesson.module);
     return {
       thesis: [
@@ -456,6 +459,498 @@
       ],
       sources: getSourcesForLesson(lesson, lens)
     };
+  }
+
+  function getCriticalLessonPack(lesson) {
+    var key = getCriticalLessonKey(lesson);
+    var packs = {
+      rag: {
+        manualTitle: 'Aprofundamento manual critico: RAG, busca, chunking, embeddings, multi-index e grounding com fontes.',
+        thesis: [
+          'RAG deve ser estudado como uma cadeia de evidencias, nao como um truque para colocar documentos no prompt. O modelo nao passa a saber magicamente o conteudo de uma base; a aplicacao seleciona evidencias, monta um contexto pequeno o suficiente para ser util e grande o suficiente para preservar significado, e entao pede ao Claude uma resposta fundamentada. A pergunta de arquitetura e: qual dado precisa ser recuperado, com qual criterio, com qual permissao, com qual ranking e com qual prova de origem?',
+          'O pipeline completo tem duas metades. Na ingestao, documentos sao limpos, divididos em chunks, enriquecidos com metadados, embutidos em vetores e, muitas vezes, indexados tambem por busca lexical. Na consulta, a pergunta e reescrita ou expandida, a busca combina embeddings com BM25 quando necessario, um re-ranker reduz ruido, o montador de contexto ordena evidencias e o prompt exige resposta com limites, citacoes e declaracao de incerteza. Se qualquer etapa for rasa, o modelo pode receber contexto irrelevante e responder com confianca falsa.',
+          'Os erros mais importantes sao de sistema, nao de frase. Chunk pequeno demais quebra a explicacao; chunk grande demais dilui a evidencia; indice sem ACL vaza documento; embedding fora do dominio perde sinonimos tecnicos; pergunta ambigua recupera qualquer coisa; citacao sem verificacao vira teatro de confiabilidade. Em prova, RAG quase sempre aparece quando conhecimento atualizado, documentos internos, auditabilidade ou reducao de alucinacao importam, mas a alternativa correta tambem precisa citar validacao, permissao e fallback.',
+          'Exemplo simplificado: imagine uma biblioteca enorme. RAG nao e pedir para alguem decorar todos os livros antes de responder. E pedir para um bibliotecario encontrar as paginas certas, marcar de onde tirou cada trecho, entregar so o necessario para responder e avisar quando a pagina nao prova a conclusao. Se a pagina errada chega ao leitor, a resposta final tambem fica errada mesmo que o leitor seja excelente.'
+        ],
+        flow: [
+          { label: 'Ingestao confiavel', text: 'Normalizar documentos, remover duplicatas, preservar origem, classificar confidencialidade e registrar versao do conteudo.' },
+          { label: 'Chunking com semantica', text: 'Dividir por estrutura real, como titulos, secoes, tabelas e blocos logicos, evitando cortar definicoes no meio.' },
+          { label: 'Indexacao hibrida', text: 'Combinar embeddings para significado e BM25 para termos exatos, codigos, siglas, nomes de APIs e vocabulario de prova.' },
+          { label: 'Recuperacao e ranking', text: 'Buscar candidatos, filtrar por permissao, reordenar por relevancia e descartar evidencias redundantes ou fracas.' },
+          { label: 'Resposta grounded', text: 'Montar contexto com fontes, pedir resposta limitada as evidencias e separar conclusao, incerteza e proximos passos.' },
+          { label: 'Avaliacao continua', text: 'Medir recall, precision, faithfulness, cobertura de citacoes, custo, latencia e casos em que o sistema deveria dizer que nao sabe.' }
+        ],
+        operatingPrinciples: [
+          'RAG aumenta acesso a conhecimento, mas nao substitui controle de permissao, validacao de fonte ou avaliacao de resposta.',
+          'A unidade de recuperacao deve ser desenhada para a pergunta real: FAQ, contrato, codigo, tabela, log e paper exigem chunking diferente.',
+          'Busca vetorial e lexical resolvem problemas diferentes; sistemas maduros combinam sinais em vez de apostar em um unico indice.',
+          'Citations e search results ajudam auditoria, mas so sao uteis quando a resposta realmente depende dos trechos citados.',
+          'Prompt injection em documento recuperado deve ser tratado como entrada hostil: conteudo buscado informa a resposta, mas nao deve redefinir regras do sistema.'
+        ],
+        examSignals: [
+          'Se a questao fala em documentos internos, conhecimento atualizado ou respostas verificaveis, pense em RAG com provenance.',
+          'Se aparecem siglas, codigos, nomes de produto ou identificadores exatos, BM25 ou busca hibrida costuma superar vetor puro.',
+          'Se o usuario nao deveria ver certos documentos, a permissao deve ser aplicada antes da recuperacao e antes da resposta.',
+          'Se a resposta precisa citar fonte, procure alternativa que preserva metadados, nao apenas a que aumenta contexto.',
+          'Se o problema e qualidade de recuperacao, melhorar o system prompt sozinho geralmente e insuficiente.'
+        ],
+        labProtocol: [
+          'Monte um corpus ficticio com dez documentos: politicas, FAQ, contrato, nota tecnica e changelog, todos com fonte e data.',
+          'Crie tres estrategias de chunking e compare qual recupera melhor perguntas que dependem de definicao, excecao e tabela.',
+          'Execute busca lexical, vetorial e hibrida para a mesma pergunta; registre quando cada uma falha.',
+          'Force um documento com instrucao maliciosa dentro do texto e confirme que ele nao altera o comportamento do sistema.',
+          'Exija resposta com citacoes e marque manualmente quais frases realmente foram sustentadas por fonte.',
+          'Transforme os erros em um mini eval: pergunta, resposta esperada, documentos corretos, documentos distratores e criterio de aceitacao.'
+        ],
+        chart: [
+          { label: 'Contexto', value: 96 },
+          { label: 'Contrato', value: 82 },
+          { label: 'Ferramentas', value: 78 },
+          { label: 'Validacao', value: 94 },
+          { label: 'Risco', value: 86 }
+        ],
+        comparison: [
+          { title: 'Prompt longo', text: 'Serve para pouco material estatico; piora custo, ruido e manutencao quando documentos mudam.' },
+          { title: 'RAG simples', text: 'Recupera trechos por similaridade, mas pode falhar em termos exatos, permissoes e citacoes fracas.' },
+          { title: 'RAG hibrido', text: 'Combina vetor, lexical, metadados e re-ranking para equilibrar significado, precisao e auditabilidade.' },
+          { title: 'Agentic search', text: 'Permite decompor perguntas, iterar buscas e comparar fontes, mas aumenta custo, latencia e necessidade de guardrails.' }
+        ],
+        sources: [
+          { kind: 'paper', title: 'Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks', url: 'https://arxiv.org/abs/2005.11401', use: 'Base academica para combinar geracao com recuperacao externa.' },
+          { kind: 'docs', title: 'Claude - Search results', url: 'https://platform.claude.com/docs/en/build-with-claude/search-results', use: 'Referencia de como tratar resultados rastreaveis em respostas.' },
+          { kind: 'docs', title: 'Claude - Citations', url: 'https://platform.claude.com/docs/en/build-with-claude/citations', use: 'Referencia para associar afirmacoes a evidencias.' },
+          { kind: 'repo', title: 'Anthropic Claude cookbooks', url: 'https://github.com/anthropics/claude-cookbooks', use: 'Exemplos publicos para transformar RAG em aplicacao pratica.' },
+          { kind: 'security', title: 'OWASP Top 10 for LLM Applications', url: 'https://owasp.org/www-project-top-10-for-large-language-model-applications/', use: 'Base para riscos como prompt injection, vazamento e excessive agency.' }
+        ]
+      },
+      mcp: {
+        manualTitle: 'Aprofundamento manual critico: MCP tools, resources, prompts, clients, servers e inspector.',
+        thesis: [
+          'MCP e uma arquitetura de integracao padronizada. A ideia central e separar o cliente que conversa com o modelo, o servidor que expoe capacidades externas e as primitivas que descrevem o que pode ser usado. Tools representam acoes chamaveis, resources representam contexto ou dados consultaveis, e prompts representam workflows ou templates reutilizaveis. O ganho arquitetural nao e so conveniencia: e criar contratos explicitos entre IA, aplicacao e servicos externos.',
+          'A decisao mais importante e escolher a primitiva correta. Se o modelo precisa executar uma consulta, calcular algo, chamar uma API ou alterar estado, pense em tool. Se precisa ler um documento, schema, configuracao, pagina ou contexto controlado, pense em resource. Se precisa repetir um roteiro de trabalho com parametros e instrucoes, pense em prompt. Misturar tudo em uma unica tool gigante aumenta ambiguidade, dificulta permissao e cria superficie de ataque maior.',
+          'O MCP tambem introduz um modelo operacional: discovery de capacidades, schemas descritivos, chamada controlada, resposta estruturada, erros previsiveis, inspector para depuracao e governanca de quais servidores podem ser conectados. Em prova, a alternativa correta costuma preservar separacao cliente-servidor e evitar que o modelo tenha acesso amplo a filesystem, contas ou APIs sem allowlist, escopo e revisao.',
+          'Exemplo simplificado: MCP e como montar uma bancada de trabalho para o Claude. As tools sao os equipamentos que fazem algo, como medir ou cortar; resources sao os manuais e pecas disponiveis para consulta; prompts sao receitas de procedimento. Um bom arquiteto nao entrega a chave de todo o predio: entrega a bancada certa, com ferramentas nomeadas e regras de uso.'
+        ],
+        flow: [
+          { label: 'Descobrir necessidade', text: 'Definir se o caso exige acao, leitura de contexto ou roteiro reutilizavel.' },
+          { label: 'Escolher primitiva', text: 'Mapear para tool, resource ou prompt, mantendo cada contrato pequeno e especifico.' },
+          { label: 'Definir schema', text: 'Criar nome, descricao, parametros obrigatorios, tipos e mensagens de erro que ajudem o modelo a escolher corretamente.' },
+          { label: 'Controlar permissao', text: 'Aplicar allowlist, escopo minimo, dados ficticios nos exemplos e bloqueio de operacoes sensiveis.' },
+          { label: 'Testar no inspector', text: 'Validar discovery, payload, resposta, erro, logs e experiencia de uso antes de conectar em fluxo real.' },
+          { label: 'Operar com observabilidade', text: 'Registrar chamadas, latencia, falhas, versao do servidor, risco residual e criterios de rollback.' }
+        ],
+        operatingPrinciples: [
+          'Tools fazem operacoes; resources expõem contexto; prompts empacotam workflows. Essa distincao costuma decidir questoes de prova.',
+          'Um servidor MCP deve expor capacidades estreitas, explicitas e testaveis, nao um atalho irrestrito para sistema operacional ou conta corporativa.',
+          'Descricao de tool e parte do contrato: deve explicar quando usar, quando nao usar, parametros e formato de retorno.',
+          'Inspector e parte do ciclo de engenharia, porque revela erros de schema, mensagens confusas e comportamento inesperado antes da integracao.',
+          'Seguranca em MCP exige tratar nomes, descricoes e resultados como superficie de prompt injection e tool poisoning.'
+        ],
+        examSignals: [
+          'Se a pergunta contrasta tool, resource e prompt, escolha pela responsabilidade da primitiva, nao pelo nome mais familiar.',
+          'Se o caso pede compartilhar contexto sem executar acao, resource geralmente e melhor que tool.',
+          'Se o caso pede workflow repetivel com parametros, prompt MCP pode ser mais adequado que system prompt global.',
+          'Se o servidor acessa dados sensiveis, a resposta correta inclui escopo, permissao, logging e validacao.',
+          'Se o problema e depurar integracao MCP, procure inspector, schemas e teste de cliente-servidor.'
+        ],
+        labProtocol: [
+          'Desenhe um servidor MCP ficticio para uma base de estudos: uma tool de busca, um resource de syllabus e um prompt de revisao.',
+          'Escreva os schemas de entrada com campos obrigatorios, exemplos validos e erros esperados.',
+          'Simule uma chamada correta, uma chamada com parametro faltante e uma chamada que tenta acessar dado fora do escopo.',
+          'Valide se a descricao da tool permitiria ao modelo escolher a capacidade certa sem adivinhar.',
+          'Liste quais logs seriam guardados para auditoria sem gravar segredo, token ou dado interno sensivel.',
+          'Compare o desenho com uma API REST direta e explique quando MCP adiciona valor real.'
+        ],
+        chart: [
+          { label: 'Contexto', value: 86 },
+          { label: 'Contrato', value: 96 },
+          { label: 'Ferramentas', value: 96 },
+          { label: 'Validacao', value: 88 },
+          { label: 'Risco', value: 92 }
+        ],
+        comparison: [
+          { title: 'Tool MCP', text: 'Melhor quando o modelo precisa solicitar uma acao ou consulta parametrizada com resultado controlado.' },
+          { title: 'Resource MCP', text: 'Melhor quando o modelo precisa receber contexto governado, versionado ou selecionavel.' },
+          { title: 'Prompt MCP', text: 'Melhor quando o time quer distribuir um roteiro padronizado com parametros e instrucoes reutilizaveis.' },
+          { title: 'API direta', text: 'Melhor quando nao ha necessidade de discovery por modelo ou integracao padronizada com clientes MCP.' }
+        ],
+        sources: [
+          { kind: 'spec', title: 'MCP Specification', url: 'https://modelcontextprotocol.io/specification/2025-06-18', use: 'Contrato oficial das primitivas e do modelo cliente-servidor.' },
+          { kind: 'spec', title: 'MCP Tools', url: 'https://modelcontextprotocol.io/specification/2025-06-18/server/tools', use: 'Detalhe de tools, schemas e chamadas pelo protocolo.' },
+          { kind: 'docs', title: 'MCP introduction', url: 'https://modelcontextprotocol.io/docs/getting-started/intro', use: 'Visao geral atual do protocolo e seus componentes.' },
+          { kind: 'news', title: 'Anthropic - Model Context Protocol', url: 'https://www.anthropic.com/news/model-context-protocol', use: 'Contexto profissional de por que o padrao foi criado.' },
+          { kind: 'repo', title: 'Microsoft MCP for Beginners', url: 'https://github.com/microsoft/mcp-for-beginners/', use: 'Trilha pratica publica para fixar servidor, cliente e ferramentas.' }
+        ]
+      },
+      toolUse: {
+        manualTitle: 'Aprofundamento manual critico: tool use, schemas, tool_result, erros, loops multi-turn e multiplas tools.',
+        thesis: [
+          'Tool use com Claude e o ponto em que linguagem encontra software. O modelo nao executa a tool diretamente; ele solicita uma chamada com nome e argumentos, a aplicacao decide executar, devolve um tool_result e o modelo continua com base na observacao. Essa separacao e essencial: o modelo raciocina e escolhe, mas o sistema valida, autoriza, executa, registra e trata erro.',
+          'Um design bom de tool reduz ambiguidade. Nome deve ser especifico, descricao deve dizer quando usar e quando nao usar, input_schema deve restringir tipos, obrigatoriedade e formato, e a resposta deve ser pequena, estruturada e util para o proximo passo. Tools genericas como execute_anything parecem poderosas, mas quebram previsibilidade e aumentam risco. Em prova, o melhor design costuma ser estreito, testavel e com erro explicito.',
+          'Loops multi-turn exigem estado claro. Depois de uma tool, o modelo pode precisar chamar outra, pedir informacao ao usuario, fazer retry com parametro corrigido ou encerrar. A aplicacao precisa evitar loops infinitos, impor limites de custo, diferenciar erro recuperavel de erro terminal e impedir que resultado de tool vire instrucao de sistema. Fine-grained tool streaming e multiplas tools aumentam UX e desempenho, mas tambem exigem mais observabilidade.',
+          'Exemplo simplificado: uma tool e como um formulario que o Claude preenche para pedir uma acao. Se o formulario pergunta exatamente o que precisa, com campos obrigatorios e regras claras, o sistema consegue trabalhar. Se o formulario aceita qualquer frase solta, alguem precisa adivinhar o que foi pedido, e adivinhacao em software vira erro.'
+        ],
+        flow: [
+          { label: 'Descrever capacidade', text: 'Escrever nome e descricao que deixem claro objetivo, limites e momento correto de uso.' },
+          { label: 'Definir schema', text: 'Restringir argumentos com tipos, obrigatorios, enums, formatos e descricoes orientadas a decisao.' },
+          { label: 'Receber tool_use', text: 'Validar nome, argumentos, permissao, custo e estado antes de executar qualquer chamada real.' },
+          { label: 'Executar fora do modelo', text: 'Chamar API, banco ou funcao em ambiente controlado, com timeout, logs e tratamento de excecoes.' },
+          { label: 'Enviar tool_result', text: 'Devolver resultado pequeno, estruturado, sem segredo e com erro recuperavel quando possivel.' },
+          { label: 'Concluir ou iterar', text: 'Permitir proxima tool somente se houver criterio, limite de turnos e observabilidade suficiente.' }
+        ],
+        operatingPrinciples: [
+          'A tool deve expressar uma intencao de negocio ou tecnica, nao uma permissao ampla para executar comandos arbitrarios.',
+          'Schema fraco empurra validacao para o modelo; schema forte deixa erro detectavel pelo sistema.',
+          'Tool_result e dado externo, nao autoridade hierarquica. Ele nao deve sobrescrever system prompt ou politicas.',
+          'Erros de tool devem ser desenhados como parte normal do fluxo: parametro invalido, timeout, permissao negada e recurso indisponivel.',
+          'Multiplas tools exigem limite de custo, limite de turnos, politica de paralelismo e criterio de parada.'
+        ],
+        examSignals: [
+          'Se a resposta precisa consultar API ou executar acao, tool use e mais apropriado que pedir para o modelo inventar resultado.',
+          'Se a questao fala em parametros malformados, schema e validacao sao a resposta central.',
+          'Se aparece mudanca de estado, procure aprovacao, idempotencia, logging e permissao antes da execucao.',
+          'Se ha varias tools, a resposta correta limita ordem, dependencias, retry e parada.',
+          'Se uma tool retorna conteudo hostil, o sistema deve tratar como dado e nao como nova instrucao.'
+        ],
+        labProtocol: [
+          'Crie tres tools ficticias: consultar_pedido, calcular_reembolso e abrir_chamado, cada uma com schema estreito.',
+          'Escreva exemplos de tool_use correto e incorreto para cada uma.',
+          'Defina tool_result de sucesso, erro recuperavel e erro terminal sem expor dados sensiveis.',
+          'Simule um fluxo multi-turn em que Claude consulta pedido antes de decidir se pode abrir chamado.',
+          'Adicione limite de duas chamadas por resposta e explique quando escalar para humano.',
+          'Crie um eval com casos de escolha correta de tool, parametro ausente, permissao negada e tool desnecessaria.'
+        ],
+        chart: [
+          { label: 'Contexto', value: 78 },
+          { label: 'Contrato', value: 96 },
+          { label: 'Ferramentas', value: 98 },
+          { label: 'Validacao', value: 92 },
+          { label: 'Risco', value: 88 }
+        ],
+        comparison: [
+          { title: 'Resposta sem tool', text: 'Boa para explicacao geral, ruim quando o resultado depende de estado externo ou dado atualizado.' },
+          { title: 'Tool estreita', text: 'Melhor para producao, porque limita parametros, permissao, erro e observabilidade.' },
+          { title: 'Tool ampla', text: 'Parece flexivel, mas torna comportamento imprevisivel e aumenta impacto de prompt injection.' },
+          { title: 'MCP server', text: 'Melhor quando varias capacidades precisam ser expostas de forma padronizada para clientes diferentes.' }
+        ],
+        sources: [
+          { kind: 'docs', title: 'Claude - Tool use overview', url: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview', use: 'Base oficial do ciclo de uso de ferramentas.' },
+          { kind: 'docs', title: 'Claude - How tool use works', url: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works', use: 'Detalha tool_use, tool_result e conversa multi-turn.' },
+          { kind: 'docs', title: 'Claude - Define tools', url: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools', use: 'Referencia para nome, descricao e input_schema.' },
+          { kind: 'paper', title: 'ReAct: Synergizing Reasoning and Acting in Language Models', url: 'https://arxiv.org/abs/2210.03629', use: 'Base conceitual para alternar acao e observacao.' },
+          { kind: 'security', title: 'OWASP Top 10 for LLM Applications', url: 'https://owasp.org/www-project-top-10-for-large-language-model-applications/', use: 'Riscos de agencia excessiva, output handling e tool misuse.' }
+        ]
+      },
+      structured: {
+        manualTitle: 'Aprofundamento manual critico: structured outputs, JSON Schema, strict tool use e validacao downstream.',
+        thesis: [
+          'Structured output transforma resposta de IA em contrato de software. Quando outro sistema vai consumir a saida, texto livre e uma interface instavel: pode mudar ordem, omitir campo, trocar tipo ou misturar explicacao com dado. JSON Schema, output estruturado e strict tool use reduzem essa variabilidade e tornam falhas detectaveis antes que avancem para banco, API, relatorio ou automacao.',
+          'A arquitetura correta separa formato de verdade. Um JSON valido ainda pode conter conteudo errado; por isso structured output resolve parseabilidade e conformidade de campos, mas precisa ser combinado com validacao semantica, regras de negocio, evals e tratamento de incerteza. A decisao de prova costuma ser: se a saida sera processada por maquina, schema e obrigatorio; se a saida tambem precisa estar correta, avalie evidencias e regras.',
+          'Schemas bons sao especificos sem virar armadilha. Campos obrigatorios devem refletir necessidades reais; enums reduzem variacao; arrays precisam de limites conceituais; descriptions ensinam significado; additionalProperties false reduz lixo inesperado; e o codigo deve validar novamente restricoes que o provedor ou SDK nao garante nativamente. Mudancas de schema tambem afetam cache, latencia inicial e compatibilidade downstream.',
+          'Exemplo simplificado: pedir JSON ao modelo sem schema e como pedir para alguem preencher uma planilha dizendo "coloque bonitinho". Structured output e entregar a planilha com colunas, tipos e campos obrigatorios. Ainda e preciso conferir se o conteudo faz sentido, mas pelo menos o arquivo abre e pode ser lido por outro sistema.'
+        ],
+        flow: [
+          { label: 'Identificar consumidor', text: 'Definir quem vai ler a saida: pessoa, API, banco, automacao, dashboard ou avaliador.' },
+          { label: 'Modelar schema', text: 'Criar objeto minimo com required, tipos, enums, arrays, descriptions e campos de incerteza quando necessario.' },
+          { label: 'Configurar request', text: 'Usar JSON outputs ou strict tool use conforme o contrato seja resposta final, parametros de tool ou ambos.' },
+          { label: 'Validar no codigo', text: 'Conferir parse, schema original, regras de negocio, limites e consistencia entre campos.' },
+          { label: 'Tratar falha', text: 'Definir retry, fallback, mensagem ao usuario, log e bloqueio quando o dado nao for confiavel.' },
+          { label: 'Versionar contrato', text: 'Registrar versao de schema, compatibilidade e exemplos para evitar quebrar consumidores.' }
+        ],
+        operatingPrinciples: [
+          'Structured output controla formato, nao garante verdade factual sozinho.',
+          'Strict tool use valida parametros de tool; JSON outputs valida formato da resposta final.',
+          'Schema deve ser pequeno, claro e versionado; schema grande demais aumenta manutencao e chance de incompatibilidade.',
+          'Validacao downstream continua obrigatoria, principalmente para dinheiro, seguranca, identidade, compliance e operacoes irreversiveis.',
+          'Mudanca de schema pode afetar cache, latencia inicial e consumidores; trate como mudanca de API.'
+        ],
+        examSignals: [
+          'Se a questao fala em parse error, campo ausente ou tipo inconsistente, structured output e a pista principal.',
+          'Se o problema e parametro de tool invalido, strict tool use e mais direto que prompt melhor.',
+          'Se o JSON e valido mas o conteudo e falso, a resposta deve adicionar fonte, regra, eval ou validacao semantica.',
+          'Se outro sistema consome a saida, texto livre e alternativa fraca.',
+          'Se o caso exige evolucao, procure versao de schema e compatibilidade.'
+        ],
+        labProtocol: [
+          'Modele um schema para extrair tarefas de uma ata ficticia: titulo, responsavel, prazo, prioridade, dependencia e confianca.',
+          'Crie cinco entradas ambiguas e veja quais campos precisam aceitar null, enum ou justificativa.',
+          'Implemente validacao conceitual: prazo nao pode estar no passado sem flag, prioridade precisa estar no enum e responsavel nao pode ser vazio.',
+          'Compare resposta em texto livre, JSON pedido no prompt e structured output com schema.',
+          'Simule mudanca de schema adicionando campo departamento e descreva impacto em consumidores.',
+          'Crie questoes de prova sobre diferenca entre JSON valido, schema valido e conteudo verdadeiro.'
+        ],
+        chart: [
+          { label: 'Contexto', value: 72 },
+          { label: 'Contrato', value: 98 },
+          { label: 'Ferramentas', value: 72 },
+          { label: 'Validacao', value: 96 },
+          { label: 'Risco', value: 82 }
+        ],
+        comparison: [
+          { title: 'Texto livre', text: 'Melhor para explicacao humana; ruim para automacao e auditoria de campos.' },
+          { title: 'JSON no prompt', text: 'Ajuda, mas ainda pode quebrar formato ou campo quando nao ha mecanismo de validacao.' },
+          { title: 'Structured output', text: 'Melhor para resposta final parseavel e coerente com schema.' },
+          { title: 'Strict tool use', text: 'Melhor para garantir parametros validos quando Claude chama funcoes.' }
+        ],
+        sources: [
+          { kind: 'docs', title: 'Claude - Structured outputs', url: 'https://platform.claude.com/docs/en/build-with-claude/structured-outputs', use: 'Referencia oficial para JSON outputs, strict tool use e consideracoes.' },
+          { kind: 'docs', title: 'Claude - Define tools', url: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools', use: 'Base para input_schema e descricao de ferramentas.' },
+          { kind: 'docs', title: 'Claude - Tool use overview', url: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview', use: 'Contexto de como schemas entram em fluxos agentic.' },
+          { kind: 'repo', title: 'Anthropic Claude cookbooks', url: 'https://github.com/anthropics/claude-cookbooks', use: 'Exemplos publicos para extracao, classificacao e validacao.' },
+          { kind: 'security', title: 'OWASP Top 10 for LLM Applications', url: 'https://owasp.org/www-project-top-10-for-large-language-model-applications/', use: 'Conecta output handling inseguro a risco de aplicacao.' }
+        ]
+      },
+      evals: {
+        manualTitle: 'Aprofundamento manual critico: evals, datasets, rubricas, model-based grading e regressao.',
+        thesis: [
+          'Evals sao o mecanismo que transforma impressao em engenharia. Sem avaliacao, o time discute se uma resposta parece boa; com avaliacao, compara versoes, mede regressao, separa erro de recuperacao de erro de raciocinio e decide se uma mudanca esta pronta. Para a certificacao, voce precisa reconhecer que prompt, RAG, tool use e structured output so estao maduros quando existe criterio de aceite.',
+          'Um eval util comeca por dataset. O dataset deve representar tarefas reais, casos faceis, casos de borda, ambiguidades, ataques, dados ausentes e exemplos em que o sistema deve recusar ou pedir esclarecimento. Depois vem a rubrica: o que conta como certo, parcialmente certo, errado e perigoso. Por fim, vem o avaliador: codigo para criterios objetivos, modelo para julgamento semantico e revisao humana para calibracao.',
+          'Model-based grading escala avaliacao qualitativa, mas nao deve ser tratado como oraculo. Ele precisa de rubric clara, exemplos calibrados, avaliacao cega quando possivel e auditoria de amostras. Code-based grading e mais forte quando ha contrato objetivo, como JSON valido, campo obrigatorio, citacao presente, ferramenta correta ou erro especifico. Sistemas maduros combinam os dois.',
+          'Exemplo simplificado: estudar por eval e como corrigir prova com gabarito. Sem gabarito, cada professor decide no humor do dia. Com gabarito e rubrica, todo mundo sabe o que vale ponto, o que e erro grave e o que precisa ser revisado antes de passar.'
+        ],
+        flow: [
+          { label: 'Definir risco', text: 'Listar onde o sistema pode errar: factualidade, formato, tool errada, vazamento, custo, latencia ou recusa indevida.' },
+          { label: 'Montar dataset', text: 'Criar exemplos representativos com entrada, contexto, resposta esperada, fontes corretas e distratores.' },
+          { label: 'Escrever rubrica', text: 'Definir criterios objetivos e semanticos, pesos, erros fatais e exemplos de respostas nota maxima.' },
+          { label: 'Escolher avaliador', text: 'Usar codigo para contratos objetivos, modelo para julgamento textual e humano para calibracao.' },
+          { label: 'Rodar baseline', text: 'Medir versao atual antes de alterar prompt, schema, tool, RAG ou modelo.' },
+          { label: 'Analisar erro', text: 'Classificar falhas, corrigir causa raiz, repetir teste e guardar resultado como regressao futura.' }
+        ],
+        operatingPrinciples: [
+          'Nao existe melhoria confiavel sem baseline; sempre meca antes e depois.',
+          'Dataset pequeno demais engana; dataset grande sem casos criticos tambem engana.',
+          'Rubrica deve separar qualidade, seguranca, formato, fonte, completude e criterio de recusa.',
+          'Model-based grading precisa de auditoria humana e exemplos de calibracao.',
+          'Evals devem rodar em CI ou rotina repetivel quando o sistema vira produto.'
+        ],
+        examSignals: [
+          'Se a questao pergunta como saber se melhorou, a resposta correta envolve eval e baseline.',
+          'Se a falha e formato objetivo, code-based grading tende a ser mais confiavel.',
+          'Se a falha e qualidade textual, model-based grading com rubrica pode ser adequado.',
+          'Se o dataset foi gerado sinteticamente, procure revisao e cobertura de casos reais.',
+          'Se a mudanca troca modelo, prompt ou RAG, procure regressao antes de publicar.'
+        ],
+        labProtocol: [
+          'Crie 20 casos de teste para uma aula: 8 normais, 5 borda, 4 erro esperado e 3 ataques ou confusoes.',
+          'Escreva rubrica de 0 a 4 com criterios de factualidade, formato, fonte, seguranca e utilidade.',
+          'Separe quais criterios podem ser avaliados por codigo e quais exigem julgador textual.',
+          'Rode duas versoes ficticias de prompt e classifique diferencas por tipo de erro.',
+          'Crie um relatorio de regressao com taxa de acerto, erros fatais e recomendacao de release.',
+          'Transforme os erros em flashcards e novas questoes de simulado.'
+        ],
+        chart: [
+          { label: 'Contexto', value: 74 },
+          { label: 'Contrato', value: 88 },
+          { label: 'Ferramentas', value: 66 },
+          { label: 'Validacao', value: 99 },
+          { label: 'Risco', value: 90 }
+        ],
+        comparison: [
+          { title: 'Teste manual solto', text: 'Rapido para exploracao, mas nao compara versoes nem pega regressao.' },
+          { title: 'Code-based eval', text: 'Forte para formato, schema, citacao, tool escolhida e regras objetivas.' },
+          { title: 'Model-based eval', text: 'Forte para qualidade semantica, completude e aderencia a rubrica textual.' },
+          { title: 'Human review', text: 'Essencial para calibrar rubrica, validar riscos e arbitrar casos de alto impacto.' }
+        ],
+        sources: [
+          { kind: 'docs', title: 'Claude - Prompt engineering overview', url: 'https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview', use: 'Contexto de iteracao e criterios de melhoria de prompts.' },
+          { kind: 'repo', title: 'Anthropic courses', url: 'https://github.com/anthropics/courses', use: 'Material publico oficial com padroes de exercicio e avaliacao.' },
+          { kind: 'framework', title: 'NIST AI Risk Management Framework', url: 'https://www.nist.gov/itl/ai-risk-management-framework', use: 'Base profissional para mapear, medir e gerenciar risco.' },
+          { kind: 'paper', title: 'ReAct: Synergizing Reasoning and Acting in Language Models', url: 'https://arxiv.org/abs/2210.03629', use: 'Exemplo academico de avaliacao de agentes em tarefas interativas.' },
+          { kind: 'repo', title: 'Anthropic Claude cookbooks', url: 'https://github.com/anthropics/claude-cookbooks', use: 'Exemplos publicos para experimentos e comparacao de abordagens.' }
+        ]
+      },
+      promptCaching: {
+        manualTitle: 'Aprofundamento manual critico: prompt caching, janelas de contexto, custo, latencia e estabilidade de prefixo.',
+        thesis: [
+          'Prompt caching e uma decisao de arquitetura de contexto. Ele faz sentido quando uma parte grande do prompt se repete entre chamadas: instrucoes de sistema, documentos longos, schemas, ferramentas ou material de referencia. O objetivo e reduzir custo e latencia de leituras repetidas sem sacrificar rastreabilidade. A pergunta correta nao e apenas quanto custa, mas qual parte do contexto e estavel o suficiente para virar prefixo reutilizavel.',
+          'O erro comum e misturar contexto estavel com informacao dinamica. Se cada request muda o inicio do prompt, o cache perde eficiencia. Um desenho maduro ordena conteudo em camadas: regras estaveis primeiro, recursos longos e versionados depois, conversa e tarefa especifica por ultimo. Tambem registra diagnostics, token count, cache hit/miss e impacto de mudancas em schema ou tool set.',
+          'Cache nao resolve contexto ruim. Se voce cacheia documento irrelevante, economiza em cima de uma decisao ruim. Se cacheia dado sensivel sem controle de retencao e acesso, cria risco operacional. Se depende de cache para caber no orcamento, precisa de fallback para quando o prefixo mudar. Em prova, prompt caching aparece junto com custo, latencia, contexto longo, PDF, tools e repeticao de estudos ou workflows.',
+          'Exemplo simplificado: cache e como deixar uma apostila grande ja aberta na mesa. Voce nao precisa abrir o livro inteiro toda vez que faz uma pergunta, mas so vale a pena se as paginas forem as mesmas. Se a cada pergunta voce troca a apostila toda, nao existe economia real.'
+        ],
+        flow: [
+          { label: 'Separar camadas', text: 'Dividir prompt em prefixo estavel, material versionado, tarefa atual e historico dinamico.' },
+          { label: 'Medir tokens', text: 'Contar entrada, saida, tamanho do prefixo e frequencia de repeticao antes de otimizar.' },
+          { label: 'Estabilizar prefixo', text: 'Evitar inserir data, usuario, pergunta ou contexto mutavel antes do bloco que deve ser cacheado.' },
+          { label: 'Aplicar cache', text: 'Usar cache em documentos, schemas ou tools repetidas, respeitando requisitos do provedor e do modelo.' },
+          { label: 'Diagnosticar', text: 'Acompanhar hit rate, cache misses, latencia, custo e invalidacoes por mudanca de estrutura.' },
+          { label: 'Decidir fallback', text: 'Quando cache falhar, escolher entre resumir, recuperar via RAG, reduzir contexto ou aceitar custo maior.' }
+        ],
+        operatingPrinciples: [
+          'Cache favorece prefixo estavel; qualquer mudanca antes do bloco cacheado pode reduzir aproveitamento.',
+          'Contexto longo deve ser justificado por valor de recuperacao, nao por disponibilidade de janela grande.',
+          'Token counting e diagnostics fazem parte do design, porque custo percebido sem medicao vira chute.',
+          'Mudancas de tools, schemas e output_config podem alterar comportamento de cache e devem ser versionadas.',
+          'Cache deve ser combinado com seguranca de dados, retencao adequada e minimizacao de informacao sensivel.'
+        ],
+        examSignals: [
+          'Se a questao fala em repetir documentos longos, prompt caching provavelmente e relevante.',
+          'Se cada request muda o prefixo, a alternativa que promete cache alto sem reorganizar contexto e fraca.',
+          'Se o problema e recuperar so trechos relevantes, RAG pode ser melhor que cachear tudo.',
+          'Se ha custo imprevisivel, procure token counting, diagnostics e estimativa por tentativa.',
+          'Se mudanca de schema quebra desempenho, investigue invalidacao e versao de contrato.'
+        ],
+        labProtocol: [
+          'Pegue um prompt ficticio de 20 mil tokens e marque quais partes sao estaveis, semi-estaveis e dinamicas.',
+          'Reordene o prompt para que o prefixo reutilizavel venha antes da pergunta do usuario.',
+          'Estime custo com e sem cache para cinco repeticoes usando a planilha de custos do repo.',
+          'Simule uma mudanca de schema e registre qual parte deveria invalidar cache.',
+          'Compare cache com RAG: quando repetir documento inteiro e quando recuperar so trechos.',
+          'Escreva criterios de seguranca para nao cachear dados que nao deveriam ser reutilizados.'
+        ],
+        chart: [
+          { label: 'Contexto', value: 98 },
+          { label: 'Contrato', value: 80 },
+          { label: 'Ferramentas', value: 62 },
+          { label: 'Validacao', value: 82 },
+          { label: 'Risco', value: 84 }
+        ],
+        comparison: [
+          { title: 'Contexto bruto', text: 'Simples, mas caro e ruidoso quando repetido muitas vezes.' },
+          { title: 'Prompt caching', text: 'Melhor para prefixos grandes e estaveis reutilizados em varias chamadas.' },
+          { title: 'RAG', text: 'Melhor quando apenas pequenos trechos de um corpus grande sao relevantes por pergunta.' },
+          { title: 'Resumo/compactacao', text: 'Melhor quando historico cresceu demais e precisa preservar decisoes, nao texto integral.' }
+        ],
+        sources: [
+          { kind: 'docs', title: 'Claude - Prompt caching', url: 'https://platform.claude.com/docs/en/build-with-claude/prompt-caching', use: 'Referencia oficial para cache de prompt e prefixos repetidos.' },
+          { kind: 'docs', title: 'Claude - Cache diagnostics', url: 'https://platform.claude.com/docs/en/build-with-claude/cache-diagnostics', use: 'Base para medir cache hit, miss e depuracao.' },
+          { kind: 'docs', title: 'Claude - Context windows', url: 'https://platform.claude.com/docs/en/build-with-claude/context-windows', use: 'Contexto para decidir janela, selecao e compactacao.' },
+          { kind: 'docs', title: 'Claude - Pricing', url: 'https://platform.claude.com/docs/en/about-claude/pricing', use: 'Referencia para estimar custo de tokens.' },
+          { kind: 'docs', title: 'Claude - Tool use with prompt caching', url: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-use-with-prompt-caching', use: 'Uso de cache em workflows com ferramentas.' }
+        ]
+      },
+      hooks: {
+        manualTitle: 'Aprofundamento manual critico: Claude Code hooks, gates deterministicas, gotchas e automacao segura.',
+        thesis: [
+          'Hooks em Claude Code devem ser entendidos como controles deterministas ao redor de um agente probabilistico. O prompt pode orientar, mas hook pode bloquear, validar, registrar, formatar, executar teste ou exigir revisao em pontos especificos do ciclo. Por isso, quando a questao fala em impedir comando perigoso, validar antes de editar, rodar teste depois de modificar ou auditar comportamento, hook costuma ser mais forte que instrucao textual.',
+          'O desenho de hook precisa ser preciso. Bloquear qualquer comando que contenha uma palavra solta gera falso positivo; permitir shell amplo gera risco. Um hook maduro avalia evento, ferramenta, caminho, argumentos, workspace, intencao, padrao permitido e mensagem de erro acionavel. Ele deve preferir allowlist para operacoes sensiveis, usar paths resolvidos, preservar logs sem segredo e falhar fechado apenas quando o risco justificar.',
+          'Gotchas aparecem quando o hook vira burocracia fragil. Regras amplas quebram fluxo legitimo; logs podem vazar segredo; hook lento degrada UX; regex ingenua erra comandos compostos; validacao pos-edicao pode chegar tarde para acao destrutiva; e hooks que alteram arquivos automaticamente podem gerar diffs confusos. A prova tende a favorecer controles pequenos, testados e proporcionais ao risco.',
+          'Exemplo simplificado: hook e como uma catraca antes da porta de uma sala importante. A placa dizendo "nao entre sem autorizacao" ajuda, mas a catraca realmente impede entrada quando a regra e critica. Ao mesmo tempo, se a catraca bloquear todo mundo sem motivo, o trabalho para.'
+        ],
+        flow: [
+          { label: 'Escolher evento', text: 'Identificar se o controle precisa ocorrer antes da tool, depois da tool, no fim da resposta ou no inicio da sessao.' },
+          { label: 'Definir politica', text: 'Escrever regra objetiva: caminho permitido, comando permitido, arquivo sensivel, teste obrigatorio ou formato de saida.' },
+          { label: 'Implementar minimo', text: 'Criar hook pequeno, legivel, com argumentos validados e sem dependencias desnecessarias.' },
+          { label: 'Testar falso positivo', text: 'Rodar casos legitimos, casos proibidos, paths com espaco, casing diferente e comando parcialmente parecido.' },
+          { label: 'Auditar saida', text: 'Garantir mensagem clara para o agente e log sem segredo, token, conteudo confidencial ou dado de cliente.' },
+          { label: 'Versionar e revisar', text: 'Manter hook no repo, explicar finalidade e revisar sempre que workflow ou risco mudar.' }
+        ],
+        operatingPrinciples: [
+          'Use hook quando a regra precisa ser executada de forma deterministica, nao apenas lembrada pelo modelo.',
+          'PreToolUse e melhor para bloquear antes de executar; PostToolUse e melhor para validar resultado ou disparar teste.',
+          'Allowlist costuma ser mais segura que blacklist para comandos, caminhos e operacoes sensiveis.',
+          'Hooks devem ter mensagens acionaveis para que o agente saiba corrigir o plano sem adivinhar.',
+          'Logs de hook sao artefatos de seguranca e tambem podem vazar informacao; sanitize sempre.'
+        ],
+        examSignals: [
+          'Se precisa impedir acao antes que aconteca, procure hook/gate antes da tool.',
+          'Se precisa apenas padronizar processo repetitivo, command pode ser suficiente.',
+          'Se a regra depende de conhecimento especializado sob demanda, Skill pode ser melhor.',
+          'Se o hook bloqueia demais, a alternativa correta deve mencionar falsos positivos e teste.',
+          'Se ha risco de excluir, vazar ou alterar estado, prompt sozinho e resposta fraca.'
+        ],
+        labProtocol: [
+          'Escreva uma politica: bloquear delete recursivo fora do workspace e exigir confirmacao para arquivos sensiveis.',
+          'Implemente pseudocodigo do hook validando path resolvido, ferramenta, argumento e diretorio permitido.',
+          'Crie dez casos de teste: comando permitido, proibido, path relativo, path com espaco, tentativa de escape e dry-run.',
+          'Escreva mensagens de bloqueio que ensinem a alternativa segura.',
+          'Revise logs para garantir que nao gravam segredo, conteudo interno ou token.',
+          'Compare hook com prompt, command e CI para explicar qual controle age em qual momento.'
+        ],
+        chart: [
+          { label: 'Contexto', value: 78 },
+          { label: 'Contrato', value: 88 },
+          { label: 'Ferramentas', value: 86 },
+          { label: 'Validacao', value: 98 },
+          { label: 'Risco', value: 98 }
+        ],
+        comparison: [
+          { title: 'Prompt', text: 'Orienta comportamento, mas nao garante bloqueio quando a regra e critica.' },
+          { title: 'Command', text: 'Padroniza tarefa invocavel, mas nao intercepta automaticamente todos os riscos.' },
+          { title: 'Hook', text: 'Aplica regra deterministica em pontos do ciclo, ideal para bloqueio, teste e auditoria.' },
+          { title: 'CI', text: 'Valida antes de merge ou deploy, mas pode ser tarde para acao local destrutiva.' }
+        ],
+        sources: [
+          { kind: 'docs', title: 'Claude Code - Hooks reference', url: 'https://code.claude.com/docs/en/hooks', use: 'Referencia oficial para eventos, payloads e comportamento de hooks.' },
+          { kind: 'docs', title: 'Claude Agent SDK hooks', url: 'https://code.claude.com/docs/en/agent-sdk/hooks', use: 'Complementa hooks no contexto de agentes programaticos.' },
+          { kind: 'docs', title: 'Claude Agent SDK overview', url: 'https://code.claude.com/docs/en/agent-sdk/overview', use: 'Mostra hooks junto de sessions, tools, MCP e permissions.' },
+          { kind: 'repo', title: 'Claude Code Hooks Mastery', url: 'https://github.com/disler/claude-code-hooks-mastery', use: 'Exemplos publicos de lifecycle, eventos e padroes de hook.' },
+          { kind: 'security', title: 'OWASP Top 10 for LLM Applications', url: 'https://owasp.org/www-project-top-10-for-large-language-model-applications/', use: 'Base para reduzir agencia excessiva e tool misuse.' }
+        ]
+      },
+      sdk: {
+        manualTitle: 'Aprofundamento manual critico: Claude Code SDK, Agent SDK, GitHub, CI, sessions, subagents e workflows programaticos.',
+        thesis: [
+          'Claude Code SDK e Agent SDK devem ser estudados como forma de transformar uso interativo em plataforma programatica. Em vez de depender apenas de uma sessao manual, o time pode criar fluxos que recebem tarefa, montam contexto, chamam agente, controlam permissoes, conectam tools ou MCP, registram eventos, integram GitHub e rodam validacoes. O desafio e manter a disciplina de engenharia mesmo quando o agente esta embutido em automacoes.',
+          'A arquitetura correta separa orquestracao, contexto, permissao, execucao e avaliacao. Uma aplicacao SDK precisa decidir quais arquivos entram, quais tools podem ser chamadas, quais hooks controlam risco, como sessoes sao retomadas, como subagents recebem escopo e como resultados viram PR, comentario, artefato ou tarefa. Sem esses limites, SDK vira automacao opaca com alto impacto.',
+          'GitHub e CI entram como camada de governanca. Um agente pode sugerir patch, criar resumo, revisar diff ou responder issue, mas a aprovacao, testes, branch protection, segredo e deploy precisam continuar sob controle. A prova tende a favorecer respostas que preservam fluxo de engenharia: branch pequeno, diff revisavel, testes, logs, rollback e manutencao de contexto.',
+          'Exemplo simplificado: usar SDK e como contratar um assistente para trabalhar dentro do processo da empresa, nao como soltar alguem sem cracha no escritorio. Ele pode abrir tarefas, preparar documentos e sugerir mudancas, mas precisa de lista do que pode acessar, quando pedir aprovacao e como provar que fez certo.'
+        ],
+        flow: [
+          { label: 'Definir caso de uso', text: 'Escolher fluxo programatico claro: review de PR, triagem de issue, geracao de teste, migracao ou documentacao.' },
+          { label: 'Montar contexto', text: 'Selecionar arquivos, historico, instructions, resources e limites de token necessarios para a tarefa.' },
+          { label: 'Configurar permissoes', text: 'Definir tools, MCP servers, comandos, paths, secrets proibidos e aprovacoes humanas.' },
+          { label: 'Executar agente', text: 'Rodar SDK com session, streaming, hooks, subagents ou checkpoints conforme necessidade.' },
+          { label: 'Validar artefato', text: 'Executar testes, lint, link check, security scan, diff review e rubrica de qualidade.' },
+          { label: 'Publicar com governanca', text: 'Criar PR ou comentario com resumo, evidencias, limites conhecidos e caminho de rollback.' }
+        ],
+        operatingPrinciples: [
+          'SDK nao elimina processo de engenharia; ele deve codificar o processo para ficar repetivel e auditavel.',
+          'Sessions ajudam continuidade, mas contexto antigo precisa ser revalidado contra arquivos atuais.',
+          'Subagents devem receber escopo estreito, objetivo claro e criterio de saida, nao autonomia ilimitada.',
+          'GitHub integration deve respeitar branch protection, secrets, revisao humana e CI.',
+          'Hooks, permissions e logs sao partes do produto, nao detalhes opcionais.'
+        ],
+        examSignals: [
+          'Se a questao fala em automatizar fluxo recorrente de desenvolvimento, SDK ou GitHub integration podem ser resposta.',
+          'Se o risco e contexto obsoleto, procure revalidacao de arquivos e estado antes de editar.',
+          'Se ha multiplos papeis especializados, subagents podem ajudar, mas com escopo e handoff claros.',
+          'Se a mudanca vai para repo, procure testes, PR pequeno, diff revisavel e CI.',
+          'Se aparece segredo ou conta corporativa, permissao e isolamento vem antes de automacao.'
+        ],
+        labProtocol: [
+          'Desenhe um fluxo SDK para revisar PR: entrada, arquivos lidos, criterios, hooks, testes e saida esperada.',
+          'Defina permissoes minimas para comandos, leitura de arquivos e conexao MCP.',
+          'Crie rubrica de PR com bug, seguranca, teste, UX e documentacao.',
+          'Simule retomada de session antiga e liste quais arquivos precisam ser reabertos antes de continuar.',
+          'Adicione etapa de CI que bloqueia links quebrados, segredo acidental e erro de sintaxe.',
+          'Explique como o agente reporta incerteza e quando deve pedir revisao humana.'
+        ],
+        chart: [
+          { label: 'Contexto', value: 92 },
+          { label: 'Contrato', value: 84 },
+          { label: 'Ferramentas', value: 94 },
+          { label: 'Validacao', value: 94 },
+          { label: 'Risco', value: 90 }
+        ],
+        comparison: [
+          { title: 'Uso interativo', text: 'Bom para exploracao e tarefas pontuais, mas menos repetivel e auditavel.' },
+          { title: 'Command', text: 'Padroniza tarefa local, mas ainda depende de invocacao e contexto manual.' },
+          { title: 'SDK', text: 'Permite produto agentic programatico com sessions, tools, hooks e integracoes.' },
+          { title: 'CI/GitHub app', text: 'Melhor para governar mudancas, revisar artefatos e controlar publicacao.' }
+        ],
+        sources: [
+          { kind: 'docs', title: 'Claude Agent SDK overview', url: 'https://code.claude.com/docs/en/agent-sdk/overview', use: 'Referencia oficial para criar agentes programaticos.' },
+          { kind: 'docs', title: 'Claude Agent SDK hooks', url: 'https://code.claude.com/docs/en/agent-sdk/hooks', use: 'Base para controles em fluxos SDK.' },
+          { kind: 'docs', title: 'Claude Code - Hooks reference', url: 'https://code.claude.com/docs/en/hooks', use: 'Referencia para automacoes e validacoes no ciclo do Claude Code.' },
+          { kind: 'spec', title: 'MCP Specification', url: 'https://modelcontextprotocol.io/specification/2025-06-18', use: 'Padrao para conectar agentes a ferramentas e contexto externo.' },
+          { kind: 'repo', title: 'Anthropic Claude cookbooks', url: 'https://github.com/anthropics/claude-cookbooks', use: 'Exemplos publicos para transformar conceitos em workflows.' }
+        ]
+      }
+    };
+    return packs[key] || null;
+  }
+
+  function getCriticalLessonKey(lesson) {
+    var text = ((lesson.id || '') + ' ' + (lesson.title || '') + ' ' + (lesson.objective || '') + ' ' + (lesson.technical || '')).toLowerCase();
+    if (/rag|retrieval|chunk|embedding|bm25|multi-index|agentic search/.test(text)) return 'rag';
+    if (/mcp|resource|resources|server inspector|client inspector|prompts mcp|definindo tools/.test(text)) return 'mcp';
+    if (/structured|json schema|structured data|strict tool/.test(text)) return 'structured';
+    if (/prompt caching|cache de prompt|cache diagnostics|pdf, cita|pdf citations|context window|token/.test(text)) return 'promptCaching';
+    if (/hook|hooks/.test(text)) return 'hooks';
+    if (/code-github-sdk|code-sdk|claude code sdk|agent sdk|\bgithub\b|\bci\b/.test(text)) return 'sdk';
+    if (/eval|evaluation|grading|dataset|assessment|rubrica/.test(text)) return 'evals';
+    if (/tool use|tool schemas|erros estruturados de tools|multiple tools|múltiplas tools|multi-turn com múltiplas|tool_result|fine grained|web search tool|text edit tool/.test(text)) return 'toolUse';
+    return null;
   }
 
   function getTopicLens(lesson) {
