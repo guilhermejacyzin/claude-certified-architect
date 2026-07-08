@@ -94,18 +94,18 @@ function renderInline(rawText) {
   const linkTokens = [];
 
   text = text.replace(/`([^`]+)`/g, (_, code) => {
-    const token = `@@CODE_${codeTokens.length}@@`;
+    const marker = `@@CODE_${codeTokens.length}@@`;
     codeTokens.push(`<code>${escapeHtml(code)}</code>`);
-    return token;
+    return marker;
   });
 
   text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
-    const token = `@@LINK_${linkTokens.length}@@`;
+    const marker = `@@LINK_${linkTokens.length}@@`;
     const normalized = toLibraryHref(href);
     const external = isExternalLink(normalized);
     const attrs = external ? ' target="_blank" rel="noopener noreferrer"' : '';
     linkTokens.push(`<a href="${escapeHtml(normalized)}"${attrs}>${renderInline(label)}</a>`);
-    return token;
+    return marker;
   });
 
   text = escapeHtml(text)
