@@ -1805,3 +1805,33 @@ body {
     font-size: 22px !important;
   }
 }
+
+/* Lesson summary grid repair. Keep after responsive overrides. */
+.lesson-section > summary {
+  align-items: start;
+  grid-template-columns: 44px minmax(0, 1fr);
+}
+
+.lesson-section > summary > span {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.lesson-section > summary > strong {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.lesson-section > summary > small {
+  grid-column: 2;
+  grid-row: 2;
+  margin-top: 0;
+  min-width: 0;
+}
+
+@media (max-width: 760px) {
+  .lesson-section > summary {
+    grid-template-columns: 38px minmax(0, 1fr);
+  }
+}
