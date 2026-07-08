@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir site-dist
           cp index.html _sidebar.md _navbar.md _coverpage.md .nojekyll README.md LICENSE SECURITY.md THIRD_PARTY_NOTICES.md study-log.md site-dist/
-          cp -R assets academy course docs drills examples flashcards labs practice site-dist/
+          cp -R assets academy course docs drills examples flashcards labs practice recursos-ptbr site-dist/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

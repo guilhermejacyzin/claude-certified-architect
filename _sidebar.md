@@ -17,6 +17,12 @@
   * [Claude Code em ação](academy/04-claude-code-em-acao.md)
   * [Matriz de cobertura](academy/05-matriz-cobertura-learning-path.md)
 
+* Recursos PT-BR externos
+  * [Como usar a curadoria](recursos-ptbr/README.md)
+  * [Fontes curadas](recursos-ptbr/fontes-curadas-ptbr.md)
+  * [Matriz aula a aula](recursos-ptbr/matriz-aulas-claude-ptbr.md)
+  * [Queries de pesquisa](recursos-ptbr/queries-de-pesquisa.md)
+
 * Apostila profunda
   * [Mapa do exame](docs/00-mapa-exame.md)
   * [Trilha de 17 dias](docs/01-trilha-17-dias.md)

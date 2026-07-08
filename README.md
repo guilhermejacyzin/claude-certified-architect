@@ -99,6 +99,16 @@ Comece pela pasta `course/`. Ela organiza o conteúdo como curso formal.
 - `academy/05-matriz-cobertura-learning-path.md`: matriz tópico a tópico dos
   conteúdos visíveis no learning path, com onde estudar e como praticar.
 
+### Recursos PT-BR Externos
+
+- `recursos-ptbr/README.md`: como usar a curadoria externa em PT-BR.
+- `recursos-ptbr/fontes-curadas-ptbr.md`: lista mestre de vídeos, artigos e docs
+  em português brasileiro.
+- `recursos-ptbr/matriz-aulas-claude-ptbr.md`: mapeamento aula a aula da Academy
+  para fontes externas em PT-BR.
+- `recursos-ptbr/queries-de-pesquisa.md`: consultas prontas para continuar
+  expandindo a força-tarefa de pesquisa.
+
 ### Curso
 
 - `course/README.md`: visão geral da formação.
