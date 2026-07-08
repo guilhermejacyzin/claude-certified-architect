@@ -22,6 +22,7 @@
     statsGrid: document.getElementById('statsGrid'),
     searchInput: document.getElementById('searchInput'),
     levelFilter: document.getElementById('levelFilter'),
+    lessonSelect: document.getElementById('lessonSelect'),
     progressPercent: document.getElementById('progressPercent'),
     progressBar: document.getElementById('progressBar'),
     progressText: document.getElementById('progressText'),
@@ -48,6 +49,14 @@
     els.levelFilter.addEventListener('change', function (event) {
       state.level = event.target.value;
       render();
+    });
+
+    els.lessonSelect.addEventListener('change', function (event) {
+      if (!event.target.value) return;
+      state.activeLessonId = event.target.value;
+      window.history.replaceState(null, '', '#' + state.activeLessonId);
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     els.resetProgress.addEventListener('click', function () {
@@ -95,6 +104,7 @@
       state.activeLessonId = filtered[0].id;
     }
     syncModuleButtons();
+    renderLessonSelect(filtered);
     renderLessonList(filtered);
     renderLessonDetail(getActiveLesson(filtered));
     renderProgress();
@@ -249,6 +259,21 @@
       return '<article class="video-card link-only"><a href="' + item.url + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(item.title) + '</a></article>';
     }).join('');
     return '<section class="video-section"><h3>Vídeos PT-BR relacionados</h3><div class="video-grid">' + cards + '</div></section>';
+  }
+
+  function renderLessonSelect(lessons) {
+    if (!lessons.length) {
+      els.lessonSelect.innerHTML = '<option value="">Nenhuma aula encontrada</option>';
+      els.lessonSelect.disabled = true;
+      return;
+    }
+
+    els.lessonSelect.disabled = false;
+    els.lessonSelect.innerHTML = lessons.map(function (lesson, index) {
+      var module = getModule(lesson.module);
+      var label = pad(index + 1) + ' - ' + lesson.title + ' · ' + module.short + ' · ' + lesson.duration;
+      return '<option value="' + escapeHtml(lesson.id) + '"' + (lesson.id === state.activeLessonId ? ' selected' : '') + '>' + escapeHtml(label) + '</option>';
+    }).join('');
   }
 
   function syncModuleButtons() {

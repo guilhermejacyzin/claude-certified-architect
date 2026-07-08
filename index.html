@@ -89,7 +89,14 @@
                 <option value="especialista">Especialista</option>
               </select>
             </div>
-            <div id="lessonList" class="lesson-list"></div>
+            <div class="lesson-picker">
+              <label for="lessonSelect">Aula atual</label>
+              <select id="lessonSelect" aria-label="Escolher aula"></select>
+            </div>
+            <details class="lesson-list-drawer">
+              <summary>Ver lista completa do módulo</summary>
+              <div id="lessonList" class="lesson-list"></div>
+            </details>
           </div>
 
           <article id="lessonDetail" class="lesson-detail" aria-live="polite"></article>
