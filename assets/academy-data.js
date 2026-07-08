@@ -41,6 +41,13 @@ window.ACADEMY_DATA = {
       short: 'Prova',
       color: '#9333ea',
       description: 'Labs, drills, simulados, custos, capstone e rotina de revisão.'
+    },
+    {
+      id: 'security',
+      title: 'Segurança, QA e Ensino',
+      short: 'Segurança',
+      color: '#5b21b6',
+      description: 'Threat model, guardrails, QA, UX, engenharia e critérios pedagógicos.'
     }
   ],
   resources: {

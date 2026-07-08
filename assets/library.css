@@ -1,0 +1,335 @@
+:root {
+  --bg: #f7f8fb;
+  --panel: #ffffff;
+  --ink: #111827;
+  --muted: #667085;
+  --line: #e6e9f0;
+  --primary: #5e5ce6;
+  --primary-dark: #3b37b5;
+  --violet: #7c3aed;
+  --code: #f3f4f8;
+  --shadow: 0 18px 46px rgba(31, 41, 55, 0.1);
+  color: var(--ink);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 4%, rgba(94, 92, 230, 0.12), transparent 28%),
+    linear-gradient(180deg, #fbfbfd 0%, var(--bg) 38%, #eef1f7 100%);
+}
+
+.library-shell {
+  display: grid;
+  grid-template-columns: minmax(260px, 330px) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.library-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: auto;
+  padding: 24px 18px 32px;
+  background: rgba(255, 255, 255, 0.92);
+  border-right: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+}
+
+.library-brand {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  align-items: center;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.library-brand span {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 14px;
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0;
+  background: linear-gradient(135deg, var(--primary), var(--violet));
+  box-shadow: 0 12px 28px rgba(94, 92, 230, 0.24);
+}
+
+.library-brand strong {
+  font-size: 0.98rem;
+  line-height: 1.18;
+}
+
+.library-search {
+  display: grid;
+  gap: 8px;
+  margin: 24px 0 16px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.library-search input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0 12px;
+  color: var(--ink);
+  background: #ffffff;
+  outline: none;
+}
+
+.library-search input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(94, 92, 230, 0.14);
+}
+
+#librarySidebar {
+  display: grid;
+  gap: 4px;
+}
+
+.side-link {
+  display: block;
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: #303846;
+  font-size: 0.88rem;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.side-link:hover,
+.side-link.active {
+  color: var(--primary-dark);
+  background: rgba(94, 92, 230, 0.09);
+}
+
+.side-link.depth-1 {
+  margin-left: 8px;
+}
+
+.side-link.depth-2 {
+  margin-left: 18px;
+  font-size: 0.84rem;
+}
+
+.side-link.depth-3,
+.side-link.depth-4 {
+  margin-left: 28px;
+  font-size: 0.8rem;
+}
+
+.library-main {
+  min-width: 0;
+  padding: 28px clamp(18px, 4vw, 56px) 64px;
+}
+
+.library-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: -28px 0 28px;
+  padding: 18px 0;
+  background: linear-gradient(180deg, rgba(247, 248, 251, 0.98), rgba(247, 248, 251, 0.78));
+  backdrop-filter: blur(16px);
+}
+
+.library-topbar a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border: 1px solid rgba(94, 92, 230, 0.16);
+  border-radius: 999px;
+  padding: 0 13px;
+  color: var(--primary-dark);
+  background: rgba(255, 255, 255, 0.74);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.markdown-body {
+  max-width: 1060px;
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: clamp(22px, 4vw, 56px);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow);
+}
+
+.route-label {
+  display: inline-flex;
+  margin-bottom: 18px;
+  border: 1px solid rgba(94, 92, 230, 0.18);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: var(--primary-dark);
+  background: rgba(94, 92, 230, 0.08);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4 {
+  color: var(--ink);
+  letter-spacing: 0;
+}
+
+.markdown-body h1 {
+  margin: 0 0 22px;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  line-height: 1.02;
+}
+
+.markdown-body h2 {
+  margin: 42px 0 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 1.62rem;
+}
+
+.markdown-body h3 {
+  margin: 30px 0 10px;
+  font-size: 1.22rem;
+}
+
+.markdown-body h4 {
+  margin: 22px 0 8px;
+  font-size: 1.02rem;
+}
+
+.markdown-body p,
+.markdown-body li,
+.markdown-body td,
+.markdown-body th {
+  color: #313948;
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+.markdown-body p {
+  margin: 0 0 16px;
+}
+
+.markdown-body a {
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  margin: 0 0 20px;
+  padding-left: 24px;
+}
+
+.markdown-body blockquote {
+  margin: 22px 0;
+  border-left: 4px solid var(--primary);
+  border-radius: 14px;
+  padding: 14px 18px;
+  background: rgba(94, 92, 230, 0.07);
+}
+
+.markdown-body pre {
+  overflow: auto;
+  border: 1px solid #d9dde8;
+  border-radius: 18px;
+  padding: 18px;
+  background: #10131f;
+  color: #f7f8ff;
+}
+
+.markdown-body code {
+  border-radius: 7px;
+  padding: 0.16rem 0.32rem;
+  background: var(--code);
+  color: #1f2937;
+  font-size: 0.92em;
+}
+
+.markdown-body pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  margin: 20px 0 28px;
+  border-collapse: collapse;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  vertical-align: top;
+}
+
+.markdown-body th {
+  color: var(--ink);
+  background: #f5f6fb;
+  font-weight: 800;
+}
+
+.markdown-body hr {
+  margin: 34px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.library-error {
+  border: 1px solid #fecaca;
+  border-radius: 18px;
+  padding: 18px;
+  background: #fff1f2;
+}
+
+@media (max-width: 860px) {
+  .library-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .library-sidebar {
+    position: relative;
+    height: auto;
+    max-height: 58vh;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .library-main {
+    padding: 20px 14px 44px;
+  }
+
+  .library-topbar {
+    margin-top: -20px;
+  }
+
+  .markdown-body {
+    border-radius: 22px;
+  }
+}

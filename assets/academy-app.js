@@ -194,6 +194,7 @@
           '<p>' + escapeHtml(lesson.exam) + '</p>' +
         '</section>' +
       '</div>' +
+      renderDeepDive(lesson, module) +
       videos +
       '<div class="resource-columns">' + resources + links + '</div>' +
       '<nav class="lesson-nav-actions" aria-label="Navegação entre aulas">' +
@@ -237,6 +238,129 @@
       return '<article class="video-card link-only"><a href="' + item.url + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(item.title) + '</a></article>';
     }).join('');
     return '<section class="video-section"><h3>Vídeos PT-BR relacionados</h3><div class="video-grid">' + cards + '</div></section>';
+  }
+
+  function renderDeepDive(lesson, module) {
+    var profile = getTeachingProfile(lesson, module);
+    var detailedSteps = profile.detailedSteps.map(function (step) {
+      return '<li>' + escapeHtml(step) + '</li>';
+    }).join('');
+    var mistakes = profile.mistakes.map(function (item) {
+      return '<li>' + escapeHtml(item) + '</li>';
+    }).join('');
+    var checklist = profile.checklist.map(function (item) {
+      return '<li>' + escapeHtml(item) + '</li>';
+    }).join('');
+
+    return '<section class="deep-dive">' +
+      '<div class="panel-heading">' +
+        '<div>' +
+          '<span class="eyebrow">Aula completa</span>' +
+          '<h2>Estudo profundo desta lição</h2>' +
+        '</div>' +
+      '</div>' +
+      '<div class="deep-grid">' +
+        '<article>' +
+          '<h3>Conceito em profundidade</h3>' +
+          '<p>' + escapeHtml(profile.concept) + '</p>' +
+          '<p>' + escapeHtml(profile.whyItMatters) + '</p>' +
+        '</article>' +
+        '<article>' +
+          '<h3>Como executar na prática</h3>' +
+          '<ol>' + detailedSteps + '</ol>' +
+        '</article>' +
+        '<article>' +
+          '<h3>Erros comuns</h3>' +
+          '<ul>' + mistakes + '</ul>' +
+        '</article>' +
+        '<article>' +
+          '<h3>Checklist de domínio</h3>' +
+          '<ul>' + checklist + '</ul>' +
+        '</article>' +
+      '</div>' +
+      '<div class="deep-scenario">' +
+        '<h3>Cenário de fixação</h3>' +
+        '<p>' + escapeHtml(profile.scenario) + '</p>' +
+        '<h3>Resposta esperada</h3>' +
+        '<p>' + escapeHtml(profile.expectedAnswer) + '</p>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function getTeachingProfile(lesson, module) {
+    var moduleGuidance = {
+      start: {
+        scope: 'método de estudo, diagnóstico e rotina de revisão',
+        decision: 'seguir uma sequência de aprendizagem com feedback em vez de ler arquivos aleatoriamente',
+        risk: 'estudar muito conteúdo sem medir lacunas reais',
+        artifact: 'plano de estudo, study-log, simulado diagnóstico e rotina de revisão'
+      },
+      skills: {
+        scope: 'capacidades reutilizáveis carregadas sob demanda',
+        decision: 'usar Skill quando o problema é conhecimento especializado ou procedimento repetível de contexto',
+        risk: 'colocar instruções demais no prompt global e consumir contexto sem necessidade',
+        artifact: 'SKILL.md com descrição de acionamento, workflow, exemplos e referências opcionais'
+      },
+      api: {
+        scope: 'construção com Claude API, prompts, tools, RAG, evals e features',
+        decision: 'separar raciocínio do modelo, contrato de API, validação de saída e observabilidade',
+        risk: 'tratar resposta probabilística como dado confiável sem schema, fonte ou teste',
+        artifact: 'request, system prompt, schema, tool definition, eval dataset ou pipeline RAG'
+      },
+      mcp: {
+        scope: 'integração padronizada via tools, resources e prompts',
+        decision: 'escolher a primitiva correta e aplicar menor privilégio no servidor MCP',
+        risk: 'expor ação ampla demais ou metadata capaz de induzir tool misuse',
+        artifact: 'server MCP com capabilities versionadas, schemas claros e inspector validado'
+      },
+      code: {
+        scope: 'uso de Claude Code em projetos reais de software',
+        decision: 'explorar antes de editar, manter escopo pequeno, validar e preservar mudanças existentes',
+        risk: 'executar comandos ou alterações sem entender o repositório e sem teste',
+        artifact: 'patch revisável, comandos de validação, hooks, commands, SDK ou integração GitHub'
+      },
+      practice: {
+        scope: 'treino ativo, simulados, drills e capstone',
+        decision: 'medir prontidão por cenário e justificar alternativas erradas',
+        risk: 'confundir reconhecimento de termo com domínio real de arquitetura',
+        artifact: 'resposta comentada, análise de erro, rubrica e plano de revisão'
+      },
+      security: {
+        scope: 'segurança, QA, UX, engenharia e desenho pedagógico',
+        decision: 'transformar risco e qualidade em gates verificáveis antes de publicar',
+        risk: 'declarar pronto sem crawler, threat model, revisão visual e critério de aprendizagem',
+        artifact: 'matriz de risco, checklist QA, teste de links, screenshot e critérios de aceite'
+      }
+    };
+    var guide = moduleGuidance[lesson.module] || moduleGuidance.api;
+    return {
+      concept: 'Nesta lição, o tema "' + lesson.title + '" deve ser entendido dentro do domínio de ' + guide.scope + '. O ponto central não é decorar uma definição curta, mas saber reconhecer quando o conceito aparece em um cenário real, quais responsabilidades pertencem ao modelo, quais pertencem ao código ou ferramenta, quais controles são obrigatórios e qual evidência prova que a solução funcionou. A explicação normal dá a intuição; a explicação técnica define os termos com precisão; o exemplo simplificado serve para memória e comunicação.',
+      whyItMatters: 'Isso importa porque a certificação tende a cobrar julgamento arquitetural. Quando uma questão descreve ' + lesson.objective.toLowerCase() + ', você precisa escolher a alternativa que reduz risco, preserva contexto, mantém rastreabilidade e resolve o problema com o mecanismo correto. O erro típico é responder com uma solução genérica. A decisão mais forte aqui é ' + guide.decision + '. O risco que você deve procurar no enunciado é ' + guide.risk + '.',
+      detailedSteps: [
+        'Identifique o objetivo da tarefa: ' + lesson.objective,
+        'Separe dado, instrução e ação. Dado deve ser tratado como contexto; instrução deve ficar explícita; ação precisa de contrato, permissão e validação.',
+        'Escolha o artefato correto para o caso: ' + guide.artifact + '. Se outro artefato parecer possível, explique por que ele é mais fraco neste cenário.',
+        'Aplique o passo a passo base da aula: ' + lesson.steps.join(' -> ') + '. Depois transforme cada passo em uma evidência observável.',
+        'Valide a solução com um caso normal, um caso ambíguo e um caso de falha. Se a solução não falha de forma segura, ela ainda não está pronta.',
+        'Registre a decisão em linguagem de prova: problema, escolha, tradeoff, controle de risco e motivo para rejeitar alternativas.'
+      ],
+      mistakes: [
+        'Responder com prompt genérico quando o cenário exige schema, tool, hook, MCP, teste ou aprovação humana.',
+        'Ignorar origem e confiança do contexto, principalmente quando vem de página web, PDF, README externo, tool result ou metadata MCP.',
+        'Confundir demonstração simples com solução de produção: exemplo que funciona uma vez não prova robustez.',
+        'Não definir critério de aceite. Sem critério, não há como saber se a resposta está correta ou se apenas parece convincente.',
+        'Não registrar custo, risco, fonte ou limite de permissão quando a tarefa envolve execução, busca externa ou automação.'
+      ],
+      checklist: [
+        'Consigo explicar o conceito sem copiar a definição da aula.',
+        'Consigo dizer quando usar e quando não usar este mecanismo.',
+        'Consigo apontar pelo menos dois riscos do uso incorreto.',
+        'Consigo criar um exemplo prático e um contraexemplo.',
+        'Consigo responder uma questão scenario-based justificando por que as alternativas erradas são erradas.'
+      ],
+      scenario: 'Imagine que um time precisa aplicar "' + lesson.title + '" em um projeto real. O usuário pede rapidez, mas também há risco de custo, vazamento de informação, resposta incorreta ou alteração indevida de estado. Você deve propor uma solução que preserve o objetivo da aula, use o artefato correto e inclua validação antes de produção.',
+      expectedAnswer: 'A resposta esperada começa delimitando o escopo, escolhe ' + guide.artifact + ', aplica menor privilégio quando há ferramentas ou dados externos, define teste ou rubrica, registra fonte/evidência e cria fallback seguro. Se houver baixa confiança ou ação sensível, a decisão deve escalar para revisão humana em vez de deixar o modelo agir sozinho.'
+    };
   }
 
   function renderResources(lesson) {

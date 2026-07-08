@@ -42,7 +42,9 @@
   * [Custos de tokens](docs/20-estimativa-custos-token.md)
   * [Auditoria UX e escola](docs/22-auditoria-ux-e-escola.md)
   * [Base acadêmica Agentic AI](docs/23-base-academica-agentic-ai.md)
-  * [Grade navegável 94 aulas](docs/24-grade-navegavel-94-aulas.md)
+  * [Grade navegável 101 aulas](docs/24-grade-navegavel-94-aulas.md)
+  * [Segurança Agentic AI](docs/25-matriz-seguranca-agentic-ai.md)
+  * [QA, engenharia, UX e ensino](docs/26-plano-qa-engenharia-ux-ensino.md)
 
 * Exemplos passo a passo
   * [Agentic orchestration](examples/01-agentic-orchestration-10-exemplos.md)

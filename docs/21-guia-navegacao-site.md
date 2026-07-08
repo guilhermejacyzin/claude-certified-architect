@@ -10,10 +10,10 @@ Há duas entradas principais:
 
 1. `index.html`: sala de aula, com módulos, aulas, filtros, progresso local,
    embeds de vídeo e links para materiais.
-2. `docsify.html`: biblioteca renderizada, com todo o conteúdo Markdown,
-   sidebar, busca e paginação.
+2. `docsify.html`: biblioteca Markdown local, com todo o conteúdo Markdown,
+   sidebar e busca.
 
-A grade atual tem 94 aulas navegáveis. A intenção é que a home funcione como
+A grade atual tem 101 aulas navegáveis. A intenção é que a home funcione como
 uma escola: o aluno escolhe módulo, abre aula, vê explicação em camadas, acessa
 fonte, pratica e marca progresso.
 

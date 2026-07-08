@@ -23,8 +23,8 @@ home (`index.html`) abre uma experiência guiada com módulos, aulas, progresso
 local, busca por conceito, filtro por nível, vídeos PT-BR embutidos, fontes
 externas e links diretos para a apostila profunda.
 
-Na versão atual, a academia possui **94 aulas navegáveis** distribuídas entre
-Skills, Claude API, MCP, Claude Code, prática e prova. Cada aula da interface
+Na versão atual, a academia possui **101 aulas navegáveis** distribuídas entre
+Skills, Claude API, MCP, Claude Code, prática, prova, segurança, QA e ensino. Cada aula da interface
 traz objetivo, explicação normal, explicação técnica, exemplo simplificado,
 passo a passo, prática guiada, critério de prova e links de aprofundamento.
 
@@ -164,7 +164,12 @@ Comece pela pasta `course/`. Ela organiza o conteúdo como curso formal.
 - `docs/23-base-academica-agentic-ai.md`: base acadêmica e profissional para
   ReAct, Toolformer, RAG, Self-Refine e ligação com a certificação.
 - `docs/24-grade-navegavel-94-aulas.md`: documentação da grade navegável,
-  distribuição das 94 aulas e regra de evolução sem remoção de conteúdo.
+  distribuição das 101 aulas e regra de evolução sem remoção de conteúdo.
+- `docs/25-matriz-seguranca-agentic-ai.md`: matriz de riscos para agentes,
+  Claude, MCP, Claude Code, prompt injection, tool poisoning e publicação segura.
+- `docs/26-plano-qa-engenharia-ux-ensino.md`: plano de QA, engenharia,
+  segurança, UX e ensino para evitar regressão de links, conteúdo raso e falhas
+  de publicação.
 
 ### Exemplos Passo a Passo
 

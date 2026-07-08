@@ -5,71 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Biblioteca Markdown renderizada para estudar Claude Certified Architect - Foundations em PT-BR."
+      content="Biblioteca local em Markdown para estudar Claude Certified Architect - Foundations em PT-BR."
     />
     <title>Biblioteca Claude Certified Architect PT-BR</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
-    <link rel="stylesheet" href="assets/docsify-theme.css" />
+    <link rel="stylesheet" href="assets/library.css" />
   </head>
   <body>
-    <div id="app">Carregando biblioteca...</div>
-    <script>
-      window.$docsify = {
-        name: 'Biblioteca Claude Architect PT-BR',
-        repo: 'https://github.com/guilhermejacyzin/claude-certified-architect',
-        homepage: 'README.md',
-        loadSidebar: true,
-        loadNavbar: true,
-        coverpage: true,
-        onlyCover: false,
-        subMaxLevel: 3,
-        auto2top: true,
-        relativePath: true,
-        mergeNavbar: true,
-        themeColor: '#5e5ce6',
-        alias: {
-          '/.*/_sidebar.md': '/_sidebar.md',
-          '/.*/_navbar.md': '/_navbar.md'
-        },
-        search: {
-          maxAge: 86400000,
-          paths: 'auto',
-          placeholder: 'Buscar na biblioteca',
-          noData: 'Nada encontrado',
-          depth: 6,
-          hideOtherSidebarContent: false
-        },
-        copyCode: {
-          buttonText: 'Copiar',
-          errorText: 'Erro',
-          successText: 'Copiado'
-        },
-        pagination: {
-          previousText: 'Anterior',
-          nextText: 'Próximo',
-          crossChapter: true,
-          crossChapterText: true
-        },
-        plugins: [
-          function navigationHints(hook) {
-            hook.doneEach(function () {
-              var links = document.querySelectorAll('.markdown-section a[href$=".md"]');
-              links.forEach(function (link) {
-                if (!link.getAttribute('target') && !link.href.includes(location.host)) {
-                  link.setAttribute('target', '_blank');
-                  link.setAttribute('rel', 'noopener noreferrer');
-                }
-              });
-            });
-          }
-        ]
-      };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2/dist/docsify-copy-code.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+    <div class="library-shell">
+      <aside class="library-sidebar">
+        <a class="library-brand" href="index.html">
+          <span>CA</span>
+          <strong>Biblioteca Claude Architect PT-BR</strong>
+        </a>
+        <label class="library-search">
+          <span>Buscar no indice</span>
+          <input id="librarySearch" type="search" placeholder="MCP, hooks, RAG..." />
+        </label>
+        <nav id="librarySidebar" aria-label="Indice da biblioteca"></nav>
+      </aside>
+      <main class="library-main">
+        <header class="library-topbar">
+          <a href="index.html">Academia</a>
+          <a href="#/README.md">Visao geral</a>
+          <a href="#/docs/25-matriz-seguranca-agentic-ai.md">Seguranca</a>
+          <a href="#/practice/simulado-bilingue-30-questoes.md">Simulado</a>
+          <a href="https://github.com/guilhermejacyzin/claude-certified-architect" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </header>
+        <article id="libraryContent" class="markdown-body" aria-live="polite">
+          <p>Carregando biblioteca...</p>
+        </article>
+      </main>
+    </div>
+    <script src="assets/library-app.js"></script>
   </body>
 </html>

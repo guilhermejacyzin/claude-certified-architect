@@ -1,4 +1,4 @@
-# 24 - Grade Navegável De 94 Aulas
+# 24 - Grade Navegável De 101 Aulas
 
 Este documento registra a estrutura atual da academia navegável publicada na
 home do repositório.
@@ -20,8 +20,9 @@ progresso.
 | Model Context Protocol | 14 | clients, servers, tools, resources, prompts e inspector |
 | Claude Code | 20 | setup, contexto, edição, hooks, GitHub, MCP e SDK |
 | Prática e Prova | 5 | simulados, drills, capstone e revisão |
+| Segurança, QA e Ensino | 7 | threat model, guardrails, QA, UX e desenho pedagógico |
 
-Total: **94 aulas navegáveis**.
+Total: **101 aulas navegáveis**.
 
 ## Como Cada Aula Deve Ser Escrita
 

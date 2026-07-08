@@ -6,7 +6,9 @@ decisões tomadas para transformar o repositório em uma experiência de academi
 ## Diagnóstico Da Versão Anterior
 
 A primeira versão usava Docsify. Isso resolvia leitura de Markdown, mas não
-resolvia experiência de escola.
+resolvia experiência de escola nem dava controle suficiente sobre UX, QA e
+rotas profundas. A versão atual preserva a URL `docsify.html`, mas usa um
+leitor local de Markdown sem CDN.
 
 Problemas encontrados:
 
@@ -26,8 +28,8 @@ Problemas encontrados:
    na experiência.
 9. **A paleta verde não combinava com o pedido visual.** O pedido posterior foi
    direção azul/roxo, clean e estilo Apple.
-10. **Dependência de Docsify limitava controle de UX.** Para virar escola, era
-    melhor controlar layout, dados e renderização.
+10. **Dependência de leitor externo limitava controle de UX.** Para virar
+    escola, era melhor controlar layout, dados e renderização.
 
 ## Decisão Tomada
 
@@ -39,11 +41,12 @@ Substituir a home por um app estático próprio:
   visível da Academy com mais granularidade.
 - `assets/academy-app.js`: busca, filtros, progresso, renderização e navegação.
 - `assets/academy.css`: design clean, responsivo e orientado a estudo.
-- `docsify.html`: biblioteca textual preservada para leitura longa dos Markdown.
+- `docsify.html`: biblioteca textual preservada para leitura longa dos Markdown,
+  agora implementada como leitor local.
 
 Markdown continua existindo como biblioteca profunda. A home agora é a escola; os
-arquivos `.md` são apostilas, labs, simulados e referências. O Docsify deixou de
-ser a entrada principal e passou a funcionar como leitor de apoio.
+arquivos `.md` são apostilas, labs, simulados e referências. A biblioteca deixou
+de ser a entrada principal e passou a funcionar como leitor de apoio.
 
 ## O Que Melhorou
 
@@ -58,7 +61,8 @@ ser a entrada principal e passou a funcionar como leitor de apoio.
 8. A paleta foi trocada para azul/roxo.
 9. O site funciona sem build.
 10. O GitHub Pages publica a escola junto com a biblioteca.
-11. A grade navegável atual chega a 94 aulas, reduzindo agrupamentos excessivos.
+11. A grade navegável atual chega a 101 aulas, reduzindo agrupamentos excessivos
+    e incluindo segurança, QA, UX e desenho pedagógico.
 
 ## Crítica Das Próprias Escolhas
 
