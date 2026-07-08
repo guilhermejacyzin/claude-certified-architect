@@ -1,11 +1,12 @@
 :root {
   --course-ink: #111827;
-  --course-muted: #647067;
-  --course-line: #dbe5df;
-  --course-bg: #f7faf8;
+  --course-muted: #667085;
+  --course-line: #d8dce8;
+  --course-bg: #f5f5f7;
   --course-panel: #ffffff;
-  --course-teal: #0f766e;
-  --course-teal-dark: #115e59;
+  --course-accent: #5e5ce6;
+  --course-accent-dark: #1d4ed8;
+  --course-violet: #6d28d9;
   --course-rose: #be123c;
   --course-amber: #b45309;
   --course-indigo: #4f46e5;
@@ -39,7 +40,7 @@ body {
 
 .sidebar ul li a {
   border-radius: 6px;
-  color: #26332c;
+  color: #243041;
   font-size: 14px;
   line-height: 1.45;
   padding: 5px 10px;
@@ -47,8 +48,8 @@ body {
 
 .sidebar ul li.active > a,
 .sidebar ul li a:hover {
-  color: var(--course-teal-dark);
-  background: #e8f4f1;
+  color: var(--course-accent-dark);
+  background: #f1f3ff;
   text-decoration: none;
 }
 
@@ -72,7 +73,7 @@ body {
 }
 
 .app-nav {
-  border-bottom: 1px solid rgba(219, 229, 223, 0.75);
+  border-bottom: 1px solid rgba(216, 220, 232, 0.75);
   color: var(--course-ink);
   margin: 0;
   padding: 12px 28px;
@@ -86,7 +87,7 @@ body {
 }
 
 .app-nav a:hover {
-  color: var(--course-teal);
+  color: var(--course-accent);
 }
 
 .markdown-section {
@@ -121,20 +122,20 @@ body {
 
 .markdown-section p,
 .markdown-section li {
-  color: #26332c;
+  color: #243041;
   font-size: 16px;
   line-height: 1.72;
 }
 
 .markdown-section a {
-  color: var(--course-teal-dark);
+  color: var(--course-accent-dark);
   font-weight: 650;
 }
 
 .markdown-section blockquote {
-  border-left: 4px solid var(--course-teal);
+  border-left: 4px solid var(--course-accent);
   border-radius: 0 8px 8px 0;
-  background: #eef8f5;
+  background: #f1f3ff;
   color: var(--course-ink);
   margin: 20px 0;
   padding: 14px 18px;
@@ -148,7 +149,7 @@ body {
 }
 
 .markdown-section th {
-  background: #eef8f5;
+  background: #f1f3ff;
   color: var(--course-ink);
   font-weight: 800;
 }
@@ -181,9 +182,9 @@ body {
 
 .cover {
   background:
-    radial-gradient(circle at 20% 20%, rgba(15, 118, 110, 0.16), transparent 34%),
-    radial-gradient(circle at 78% 28%, rgba(190, 18, 60, 0.12), transparent 32%),
-    linear-gradient(135deg, #ffffff 0%, #f4faf8 52%, #eef2ff 100%) !important;
+    radial-gradient(circle at 20% 20%, rgba(94, 92, 230, 0.16), transparent 34%),
+    radial-gradient(circle at 78% 28%, rgba(10, 132, 255, 0.12), transparent 32%),
+    linear-gradient(135deg, #ffffff 0%, #f8f7ff 52%, #eef2ff 100%) !important;
   color: var(--course-ink);
 }
 
@@ -201,7 +202,7 @@ body {
 
 .cover-main blockquote {
   border: 0;
-  color: #26332c;
+  color: #243041;
   font-size: 19px;
   line-height: 1.55;
   margin: 0 auto 28px;
@@ -211,16 +212,16 @@ body {
 .cover-main > p:last-of-type a {
   border: 1px solid var(--course-line);
   border-radius: 8px;
-  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.12);
-  color: var(--course-teal-dark);
+  box-shadow: 0 10px 24px rgba(94, 92, 230, 0.12);
+  color: var(--course-accent-dark);
   font-weight: 800;
   margin: 5px;
   padding: 11px 15px;
 }
 
 .cover-main > p:last-of-type a:first-child {
-  background: var(--course-teal);
-  border-color: var(--course-teal);
+  background: linear-gradient(135deg, var(--course-accent-dark), var(--course-accent));
+  border-color: var(--course-accent);
   color: #ffffff;
 }
 
@@ -281,7 +282,7 @@ body {
 .learning-map span {
   background: #ffffff;
   border: 1px solid var(--course-line);
-  border-top: 4px solid var(--course-teal);
+  border-top: 4px solid var(--course-accent);
   border-radius: 8px;
   color: var(--course-ink);
   font-size: 13px;
@@ -304,11 +305,11 @@ body {
 }
 
 .learning-map span:nth-child(5) {
-  border-top-color: var(--course-teal-dark);
+  border-top-color: var(--course-accent-dark);
 }
 
 .learning-map span:nth-child(6) {
-  border-top-color: #6d28d9;
+  border-top-color: var(--course-violet);
 }
 
 .docsify-pagination-container {

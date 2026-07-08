@@ -5,70 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Curso navegável em PT-BR para estudar Claude Certified Architect - Foundations."
+      content="Academia PT-BR para estudar Claude Certified Architect - Foundations com aulas, vídeos, prática e simulados."
     />
-    <title>Claude Certified Architect PT-BR</title>
+    <title>Academia Claude Architect PT-BR</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
-    <link rel="stylesheet" href="assets/docsify-theme.css" />
+    <link rel="stylesheet" href="assets/academy.css" />
   </head>
   <body>
-    <div id="app">Carregando curso...</div>
-    <script>
-      window.$docsify = {
-        name: 'Claude Certified Architect PT-BR',
-        repo: 'https://github.com/guilhermejacyzin/claude-certified-architect',
-        homepage: 'README.md',
-        loadSidebar: true,
-        loadNavbar: true,
-        coverpage: true,
-        onlyCover: false,
-        subMaxLevel: 3,
-        auto2top: true,
-        mergeNavbar: true,
-        themeColor: '#0f766e',
-        alias: {
-          '/.*/_sidebar.md': '/_sidebar.md',
-          '/.*/_navbar.md': '/_navbar.md'
-        },
-        search: {
-          maxAge: 86400000,
-          paths: 'auto',
-          placeholder: 'Buscar no curso',
-          noData: 'Nada encontrado',
-          depth: 6,
-          hideOtherSidebarContent: false
-        },
-        copyCode: {
-          buttonText: 'Copiar',
-          errorText: 'Erro',
-          successText: 'Copiado'
-        },
-        pagination: {
-          previousText: 'Anterior',
-          nextText: 'Próximo',
-          crossChapter: true,
-          crossChapterText: true
-        },
-        plugins: [
-          function navigationHints(hook) {
-            hook.doneEach(function () {
-              var links = document.querySelectorAll('.markdown-section a[href$=".md"]');
-              links.forEach(function (link) {
-                if (!link.getAttribute('target') && !link.href.includes(location.host)) {
-                  link.setAttribute('target', '_blank');
-                  link.setAttribute('rel', 'noopener noreferrer');
-                }
-              });
-            });
-          }
-        ]
-      };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2/dist/docsify-copy-code.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+    <div class="academy-shell">
+      <aside class="sidebar" aria-label="Navegação principal">
+        <a class="brand" href="#start-how-to-study" aria-label="Ir para início">
+          <span class="brand-mark">CA</span>
+          <span>
+            <strong>Claude Architect</strong>
+            <small>Academia PT-BR</small>
+          </span>
+        </a>
+
+        <div class="search-panel">
+          <label for="searchInput">Buscar aula, conceito ou recurso</label>
+          <input id="searchInput" type="search" placeholder="MCP, RAG, hook, JSON..." />
+        </div>
+
+        <nav id="moduleNav" class="module-nav" aria-label="Módulos"></nav>
+
+        <div class="sidebar-actions">
+          <a href="docsify.html#/README.md">Biblioteca completa</a>
+          <a href="docsify.html#/recursos-ptbr/matriz-aulas-claude-ptbr.md">Recursos PT-BR</a>
+          <a href="docsify.html#/practice/simulado-bilingue-30-questoes.md">Simulado</a>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <span class="eyebrow">Formação navegável</span>
+            <h1><span>Academia Claude</span><span>Certified Architect</span></h1>
+          </div>
+          <div class="topbar-actions">
+            <button id="resetProgress" class="ghost-button" type="button">Limpar progresso</button>
+            <a class="primary-button" href="docsify.html#/course/00-como-usar-o-curso.md">Começar pelo método</a>
+          </div>
+        </header>
+
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">Padrão escola</span>
+            <h2>
+              <span>Estude aula por aula</span>
+              <span>com explicação normal,</span>
+              <span>técnica, simplificada,</span>
+              <span>prática e vídeos PT-BR.</span>
+            </h2>
+            <p class="hero-lines">
+              <span>Academia com módulos, aulas e objetivos.</span>
+              <span>Vídeos PT-BR, fontes, apostila e simulados.</span>
+              <span>Estudo guiado em PT-BR.</span>
+              <span>Sem depender só da Academy oficial.</span>
+            </p>
+          </div>
+          <div class="progress-card" aria-live="polite">
+            <span>Progresso local</span>
+            <strong id="progressPercent">0%</strong>
+            <div class="progress-track"><div id="progressBar"></div></div>
+            <p id="progressText">Marque aulas como concluídas para acompanhar sua evolução neste navegador.</p>
+          </div>
+        </section>
+
+        <section class="stats-grid" id="statsGrid" aria-label="Resumo do curso"></section>
+
+        <section class="academy-layout">
+          <div class="lesson-list-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="eyebrow">Trilha</span>
+                <h2>Aulas</h2>
+              </div>
+              <select id="levelFilter" aria-label="Filtrar por nível">
+                <option value="all">Todos os níveis</option>
+                <option value="fundamentos">Fundamentos</option>
+                <option value="praticante">Praticante</option>
+                <option value="arquiteto">Arquiteto</option>
+                <option value="especialista">Especialista</option>
+              </select>
+            </div>
+            <div id="lessonList" class="lesson-list"></div>
+          </div>
+
+          <article id="lessonDetail" class="lesson-detail" aria-live="polite"></article>
+        </section>
+
+        <section class="resource-board">
+          <div class="panel-heading">
+            <div>
+              <span class="eyebrow">Biblioteca PT-BR</span>
+              <h2>Vídeos e artigos incorporados ao estudo</h2>
+            </div>
+            <a href="docsify.html#/recursos-ptbr/fontes-curadas-ptbr.md">Ver lista completa</a>
+          </div>
+          <div id="resourceBoard" class="resource-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="assets/academy-data.js"></script>
+    <script src="assets/academy-extra-lessons.js"></script>
+    <script src="assets/academy-app.js"></script>
   </body>
 </html>

@@ -32,7 +32,7 @@ jobs:
         shell: bash
         run: |
           mkdir site-dist
-          cp index.html _sidebar.md _navbar.md _coverpage.md .nojekyll README.md LICENSE SECURITY.md THIRD_PARTY_NOTICES.md study-log.md site-dist/
+          cp index.html docsify.html _sidebar.md _navbar.md _coverpage.md .nojekyll README.md LICENSE SECURITY.md THIRD_PARTY_NOTICES.md study-log.md site-dist/
           cp -R assets academy course docs drills examples flashcards labs practice recursos-ptbr site-dist/
 
       - name: Upload artifact

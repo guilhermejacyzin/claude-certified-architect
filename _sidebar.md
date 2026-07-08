@@ -40,6 +40,9 @@
   * [Guia tri-camada](docs/18-guia-tri-camada-conceitos.md)
   * [Playbooks](docs/19-playbooks-passo-a-passo.md)
   * [Custos de tokens](docs/20-estimativa-custos-token.md)
+  * [Auditoria UX e escola](docs/22-auditoria-ux-e-escola.md)
+  * [Base acadêmica Agentic AI](docs/23-base-academica-agentic-ai.md)
+  * [Grade navegável 94 aulas](docs/24-grade-navegavel-94-aulas.md)
 
 * Exemplos passo a passo
   * [Agentic orchestration](examples/01-agentic-orchestration-10-exemplos.md)

@@ -1,9 +1,21 @@
 # 21 - Guia De Navegação Do Site
 
-Este repositório também funciona como um site de estudo. A navegação foi pensada
-para reduzir atrito: você pode começar pelo curso principal, consultar a Academy,
+Este repositório também funciona como um site de estudo em formato de academia.
+A navegação foi pensada para reduzir atrito: você pode começar pela trilha
+guiada, abrir uma aula, assistir vídeos PT-BR, consultar fontes, marcar progresso,
 abrir exemplos, fazer labs e resolver simulados sem precisar caçar arquivos no
 GitHub.
+
+Há duas entradas principais:
+
+1. `index.html`: sala de aula, com módulos, aulas, filtros, progresso local,
+   embeds de vídeo e links para materiais.
+2. `docsify.html`: biblioteca renderizada, com todo o conteúdo Markdown,
+   sidebar, busca e paginação.
+
+A grade atual tem 94 aulas navegáveis. A intenção é que a home funcione como
+uma escola: o aluno escolhe módulo, abre aula, vê explicação em camadas, acessa
+fonte, pratica e marca progresso.
 
 ## Link Do Site
 
@@ -19,7 +31,8 @@ publica o site automaticamente a cada push na branch `main`.
 
 ## Por Onde Começar
 
-Use esta ordem:
+Na home da academia, use a aula **Como usar a academia**. Para estudar direto
+pela biblioteca, use esta ordem:
 
 1. `course/00-como-usar-o-curso.md`
 2. `docs/00-mapa-exame.md`
@@ -34,7 +47,9 @@ Use esta ordem:
 
 ## Como Usar A Busca
 
-A busca do site indexa os arquivos Markdown. Pesquise por termos como:
+A busca da home filtra aulas por título, objetivo, explicação, prática e nível.
+A busca da biblioteca (`docsify.html`) indexa os arquivos Markdown. Pesquise por
+termos como:
 
 - `tool_use`
 - `MCP resource`
@@ -47,7 +62,8 @@ A busca do site indexa os arquivos Markdown. Pesquise por termos como:
 - `eval`
 - `RAG`
 
-Quando o resultado abrir, use o menu lateral para continuar no mesmo módulo.
+Quando o resultado abrir na academia, a aula aparece no painel central. Quando
+abrir na biblioteca, use o menu lateral para continuar no mesmo módulo.
 
 ## Como Estudar Por Perfil
 
@@ -76,6 +92,8 @@ flowchart LR
 
 ## Convenções De Navegação
 
+- **Academia**: primeira tela do site, pensada como sala de aula.
+- **Biblioteca**: versão renderizada dos Markdown em `docsify.html`.
 - **Curso principal**: sequência formal de estudo.
 - **Academy expandida**: material estruturado a partir dos tópicos visíveis do
   learning path.
@@ -99,20 +117,23 @@ Depois abra:
 http://localhost:8080
 ```
 
-Use servidor local porque o site busca arquivos Markdown dinamicamente; abrir
-`index.html` direto pelo explorador pode bloquear carregamento de arquivos.
+Use servidor local porque a biblioteca busca arquivos Markdown dinamicamente;
+abrir `docsify.html` direto pelo explorador pode bloquear carregamento de
+arquivos.
 
 ## Checklist De UX Do Repositório
 
 O repo fica saudável quando:
 
 1. O README aponta para o site.
-2. O menu lateral lista todo conteúdo importante.
+2. A home abre como academia, não como landing page.
 3. Cada novo módulo entra na sidebar.
 4. Cada simulado entra em `practice/` e na sidebar.
 5. Cada lab entra em `labs/` e na sidebar.
 6. Custos de execução são atualizados quando o modelo/câmbio mudar.
 7. O GitHub Pages continua publicando via Actions.
-8. A busca encontra termos-chave da prova.
+8. A busca da academia encontra termos-chave da prova.
 9. O conteúdo sensível não entra no repositório.
 10. O fluxo de estudo continua claro para alguém que chegou agora.
+11. Vídeos PT-BR aparecem incorporados quando possível.
+12. A paleta visual fica em azul/roxo, sem retorno ao tema verde anterior.

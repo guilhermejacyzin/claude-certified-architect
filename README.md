@@ -18,9 +18,27 @@ Este repositório também foi preparado como um site de estudo via GitHub Pages:
 https://guilhermejacyzin.github.io/claude-certified-architect/
 ```
 
-O site oferece menu lateral, busca, capa de entrada, trilha visual, navegação por
-módulos e leitura direta dos arquivos Markdown. Se o GitHub Pages ainda não
-estiver ativo, habilite **Settings > Pages > GitHub Actions** no repositório.
+O site agora foi organizado como uma academia, não apenas como documentação. A
+home (`index.html`) abre uma experiência guiada com módulos, aulas, progresso
+local, busca por conceito, filtro por nível, vídeos PT-BR embutidos, fontes
+externas e links diretos para a apostila profunda.
+
+Na versão atual, a academia possui **94 aulas navegáveis** distribuídas entre
+Skills, Claude API, MCP, Claude Code, prática e prova. Cada aula da interface
+traz objetivo, explicação normal, explicação técnica, exemplo simplificado,
+passo a passo, prática guiada, critério de prova e links de aprofundamento.
+
+Também existe uma biblioteca Markdown preservada em `docsify.html`. Ela serve
+para leitura longa dos arquivos do repositório com sidebar, busca e paginação.
+Na prática:
+
+- use `index.html` como sala de aula;
+- use `docsify.html` como biblioteca completa;
+- use `practice/`, `labs/` e `examples/` como treino;
+- use `recursos-ptbr/` para fontes externas em português brasileiro.
+
+Se o GitHub Pages ainda não estiver ativo, habilite **Settings > Pages > GitHub
+Actions** no repositório.
 
 Para abrir localmente:
 
@@ -141,6 +159,12 @@ Comece pela pasta `course/`. Ela organiza o conteúdo como curso formal.
   estudo.
 - `docs/21-guia-navegacao-site.md`: instruções para usar o repositório como site
   navegável, com busca, menu lateral, Pages e servidor local.
+- `docs/22-auditoria-ux-e-escola.md`: auditoria técnica da primeira versão,
+  decisões de UX, críticas das escolhas e critérios para virar uma escola real.
+- `docs/23-base-academica-agentic-ai.md`: base acadêmica e profissional para
+  ReAct, Toolformer, RAG, Self-Refine e ligação com a certificação.
+- `docs/24-grade-navegavel-94-aulas.md`: documentação da grade navegável,
+  distribuição das 94 aulas e regra de evolução sem remoção de conteúdo.
 
 ### Exemplos Passo a Passo
 
