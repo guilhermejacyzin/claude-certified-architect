@@ -45,6 +45,7 @@
   * [Grade navegável 101 aulas](docs/24-grade-navegavel-94-aulas.md)
   * [Segurança Agentic AI](docs/25-matriz-seguranca-agentic-ai.md)
   * [QA, engenharia, UX e ensino](docs/26-plano-qa-engenharia-ux-ensino.md)
+  * [Modelo de aula densa](docs/27-modelo-aula-densa-fontes.md)
 
 * Exemplos passo a passo
   * [Agentic orchestration](examples/01-agentic-orchestration-10-exemplos.md)

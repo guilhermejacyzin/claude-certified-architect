@@ -25,8 +25,10 @@ externas e links diretos para a apostila profunda.
 
 Na versão atual, a academia possui **101 aulas navegáveis** distribuídas entre
 Skills, Claude API, MCP, Claude Code, prática, prova, segurança, QA e ensino. Cada aula da interface
-traz objetivo, explicação normal, explicação técnica, exemplo simplificado,
-passo a passo, prática guiada, critério de prova e links de aprofundamento.
+traz objetivo, explicação normal, explicação técnica ampliada, exemplo
+simplificado, passo a passo, prática guiada, critério de prova, seção de
+arquitetura com fluxograma, gráfico de foco, comparação de alternativas,
+protocolo de treino e fontes oficiais/acadêmicas de aprofundamento.
 
 Também existe uma biblioteca Markdown preservada em `docsify.html`. Ela serve
 para leitura longa dos arquivos do repositório com sidebar, busca e paginação.
@@ -170,6 +172,9 @@ Comece pela pasta `course/`. Ela organiza o conteúdo como curso formal.
 - `docs/26-plano-qa-engenharia-ux-ensino.md`: plano de QA, engenharia,
   segurança, UX e ensino para evitar regressão de links, conteúdo raso e falhas
   de publicação.
+- `docs/27-modelo-aula-densa-fontes.md`: padrão de densidade por aula, com
+  fluxogramas, critérios de pronto e bibliografia técnica/acadêmica usada na
+  expansão da academia.
 
 ### Exemplos Passo a Passo
 
