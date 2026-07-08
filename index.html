@@ -52,16 +52,10 @@
           <div class="hero-copy">
             <span class="eyebrow">Padrão escola</span>
             <h2>
-              <span>Estude aula por aula</span>
-              <span>com explicação normal,</span>
-              <span>técnica, simplificada,</span>
-              <span>prática e vídeos PT-BR.</span>
+              <span>Profundidade sem poluição visual.</span>
             </h2>
             <p class="hero-lines">
-              <span>Academia com módulos, aulas e objetivos.</span>
-              <span>Vídeos PT-BR, fontes, apostila e simulados.</span>
-              <span>Estudo guiado em PT-BR.</span>
-              <span>Sem depender só da Academy oficial.</span>
+              <span>Comece pelo essencial, abra as camadas técnicas quando precisar e use labs, vídeos, fontes e simulados como reforço.</span>
             </p>
           </div>
           <div class="progress-card" aria-live="polite">
@@ -72,7 +66,13 @@
           </div>
         </section>
 
-        <section class="stats-grid" id="statsGrid" aria-label="Resumo do curso"></section>
+        <details class="course-map">
+          <summary>
+            <span>Mapa do curso</span>
+            <strong>Ver progresso por módulo e distribuição das 101 aulas</strong>
+          </summary>
+          <section class="stats-grid" id="statsGrid" aria-label="Resumo do curso"></section>
+        </details>
 
         <section class="academy-layout">
           <div class="lesson-list-panel">
@@ -95,7 +95,11 @@
           <article id="lessonDetail" class="lesson-detail" aria-live="polite"></article>
         </section>
 
-        <section class="resource-board">
+        <details class="resource-board">
+          <summary>
+            <span>Biblioteca PT-BR</span>
+            <strong>Vídeos e artigos complementares</strong>
+          </summary>
           <div class="panel-heading">
             <div>
               <span class="eyebrow">Biblioteca PT-BR</span>
@@ -104,7 +108,7 @@
             <a href="docsify.html#/recursos-ptbr/fontes-curadas-ptbr.md">Ver lista completa</a>
           </div>
           <div id="resourceBoard" class="resource-grid"></div>
-        </section>
+        </details>
       </main>
     </div>
 

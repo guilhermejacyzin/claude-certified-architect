@@ -10,6 +10,10 @@
     activeLessonId: window.location.hash ? window.location.hash.replace('#', '') : 'start-how-to-study',
     completed: loadProgress()
   };
+  var initialLesson = data.lessons.find(function (lesson) { return lesson.id === state.activeLessonId; });
+  if (window.location.hash && initialLesson) {
+    state.module = initialLesson.module;
+  }
 
   var els = {
     moduleNav: document.getElementById('moduleNav'),
@@ -55,17 +59,19 @@
 
     window.addEventListener('hashchange', function () {
       var id = window.location.hash.replace('#', '');
-      if (id && data.lessons.some(function (lesson) { return lesson.id === id; })) {
+      var lesson = data.lessons.find(function (item) { return item.id === id; });
+      if (lesson) {
         state.activeLessonId = id;
+        state.module = lesson.module;
         render();
       }
     });
   }
 
   function renderModules() {
-    var all = '<button class="module-button active" data-module="all" type="button"><span>Todos</span><small>Grade completa</small></button>';
+    var all = '<button class="module-button ' + (state.module === 'all' ? 'active' : '') + '" data-module="all" type="button"><span>Todos</span><small>Grade completa</small></button>';
     var moduleButtons = data.modules.map(function (module) {
-      return '<button class="module-button" data-module="' + module.id + '" type="button" style="--accent:' + module.color + '">' +
+      return '<button class="module-button ' + (state.module === module.id ? 'active' : '') + '" data-module="' + module.id + '" type="button" style="--accent:' + module.color + '">' +
         '<span>' + escapeHtml(module.short) + '</span>' +
         '<small>' + escapeHtml(module.title) + '</small>' +
         '</button>';
@@ -88,6 +94,7 @@
     if (!filtered.some(function (lesson) { return lesson.id === state.activeLessonId; }) && filtered[0]) {
       state.activeLessonId = filtered[0].id;
     }
+    syncModuleButtons();
     renderLessonList(filtered);
     renderLessonDetail(getActiveLesson(filtered));
     renderProgress();
@@ -168,35 +175,39 @@
           (completed ? 'Aula concluída' : 'Marcar como concluída') +
         '</button>' +
       '</div>' +
-      '<div class="lesson-tabs">' +
+      '<div class="lesson-overview">' +
         '<section>' +
-          '<h3>Explicação normal</h3>' +
+          '<span class="section-kicker">Comece aqui</span>' +
+          '<h3>Entendimento essencial</h3>' +
           '<p>' + escapeHtml(lesson.normal) + '</p>' +
         '</section>' +
         '<section>' +
-          '<h3>Explicação técnica</h3>' +
-          '<p>' + escapeHtml(lesson.technical) + '</p>' +
-        '</section>' +
-        '<section>' +
-          '<h3>Exemplo simplificado</h3>' +
+          '<span class="section-kicker">Exemplo simplificado</span>' +
+          '<h3>Memória rápida</h3>' +
           '<p>' + escapeHtml(lesson.simple) + '</p>' +
         '</section>' +
       '</div>' +
-      '<div class="lesson-work">' +
-        '<section>' +
-          '<h3>Passo a passo</h3>' +
-          '<ol>' + steps + '</ol>' +
-        '</section>' +
-        '<section>' +
-          '<h3>Prática guiada</h3>' +
-          '<p>' + escapeHtml(lesson.practice) + '</p>' +
-          '<h3>Como cai em prova</h3>' +
-          '<p>' + escapeHtml(lesson.exam) + '</p>' +
-        '</section>' +
+      '<div class="lesson-sections">' +
+        '<details class="lesson-section" open>' +
+          '<summary><span>01</span><strong>Passo a passo e prática</strong><small>O que fazer, como treinar e como isso cai em prova.</small></summary>' +
+          '<div class="section-body section-grid">' +
+            '<article><h3>Passo a passo</h3><ol>' + steps + '</ol></article>' +
+            '<article><h3>Prática guiada</h3><p>' + escapeHtml(lesson.practice) + '</p><h3>Como cai em prova</h3><p>' + escapeHtml(lesson.exam) + '</p></article>' +
+          '</div>' +
+        '</details>' +
+        '<details class="lesson-section">' +
+          '<summary><span>02</span><strong>Explicação técnica</strong><small>Abra quando quiser precisão arquitetural e termos de prova.</small></summary>' +
+          '<div class="section-body"><p>' + escapeHtml(lesson.technical) + '</p></div>' +
+        '</details>' +
+        renderDeepDive(lesson, module) +
+        '<details class="lesson-section">' +
+          '<summary><span>04</span><strong>Vídeos, fontes e material do repo</strong><small>Use como reforço depois de entender a aula.</small></summary>' +
+          '<div class="section-body resource-pack">' +
+            videos +
+            '<div class="resource-columns">' + resources + links + '</div>' +
+          '</div>' +
+        '</details>' +
       '</div>' +
-      renderDeepDive(lesson, module) +
-      videos +
-      '<div class="resource-columns">' + resources + links + '</div>' +
       '<nav class="lesson-nav-actions" aria-label="Navegação entre aulas">' +
         (sequence.prev ? '<button type="button" data-jump="' + sequence.prev.id + '">Aula anterior<span>' + escapeHtml(sequence.prev.title) + '</span></button>' : '<span></span>') +
         (sequence.next ? '<button type="button" data-jump="' + sequence.next.id + '">Próxima aula<span>' + escapeHtml(sequence.next.title) + '</span></button>' : '<span></span>') +
@@ -240,6 +251,13 @@
     return '<section class="video-section"><h3>Vídeos PT-BR relacionados</h3><div class="video-grid">' + cards + '</div></section>';
   }
 
+  function syncModuleButtons() {
+    if (!els.moduleNav) return;
+    els.moduleNav.querySelectorAll('button').forEach(function (button) {
+      button.classList.toggle('active', button.dataset.module === state.module);
+    });
+  }
+
   function renderDeepDive(lesson, module) {
     var profile = getTeachingProfile(lesson, module);
     var detailedSteps = profile.detailedSteps.map(function (step) {
@@ -252,13 +270,9 @@
       return '<li>' + escapeHtml(item) + '</li>';
     }).join('');
 
-    return '<section class="deep-dive">' +
-      '<div class="panel-heading">' +
-        '<div>' +
-          '<span class="eyebrow">Aula completa</span>' +
-          '<h2>Estudo profundo desta lição</h2>' +
-        '</div>' +
-      '</div>' +
+    return '<details class="lesson-section deep-dive">' +
+      '<summary><span>03</span><strong>Aprofundamento especialista</strong><small>Conceito profundo, erros comuns, checklist e cenário de fixação.</small></summary>' +
+      '<div class="section-body">' +
       '<div class="deep-grid">' +
         '<article>' +
           '<h3>Conceito em profundidade</h3>' +
@@ -284,7 +298,8 @@
         '<h3>Resposta esperada</h3>' +
         '<p>' + escapeHtml(profile.expectedAnswer) + '</p>' +
       '</div>' +
-    '</section>';
+      '</div>' +
+    '</details>';
   }
 
   function getTeachingProfile(lesson, module) {

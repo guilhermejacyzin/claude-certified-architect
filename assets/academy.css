@@ -740,6 +740,276 @@ select {
   }
 }
 
+/* UX pass: keep depth available without showing every layer at once. */
+.hero {
+  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  margin-bottom: 12px;
+  padding: 20px;
+}
+
+.hero h2 {
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.08;
+  max-width: 780px;
+}
+
+.hero p {
+  font-size: 16px;
+  line-height: 1.55;
+  margin-top: 12px;
+  max-width: 760px;
+}
+
+.progress-card {
+  padding: 16px;
+}
+
+.progress-card strong {
+  font-size: 34px;
+}
+
+.course-map,
+.resource-board {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.course-map > summary,
+.resource-board > summary,
+.lesson-section > summary {
+  align-items: center;
+  cursor: pointer;
+  display: grid;
+  gap: 10px;
+  list-style: none;
+}
+
+.course-map > summary,
+.resource-board > summary {
+  grid-template-columns: 150px 1fr;
+  padding: 14px 18px;
+}
+
+.course-map > summary::-webkit-details-marker,
+.resource-board > summary::-webkit-details-marker,
+.lesson-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+.course-map > summary span,
+.resource-board > summary span,
+.section-kicker {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.course-map > summary strong,
+.resource-board > summary strong {
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.course-map[open] > summary,
+.resource-board[open] > summary,
+.lesson-section[open] > summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.course-map .stats-grid {
+  margin: 0;
+  padding: 14px;
+}
+
+.academy-layout {
+  gap: 16px;
+  grid-template-columns: 340px minmax(0, 1fr);
+}
+
+.lesson-hero {
+  padding: 22px;
+}
+
+.lesson-hero h2 {
+  font-size: clamp(25px, 2.6vw, 36px);
+}
+
+.lesson-overview {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  padding: 18px;
+}
+
+.lesson-overview section {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-width: 0;
+  padding: 16px;
+}
+
+.lesson-sections {
+  display: grid;
+  gap: 10px;
+  padding: 0 18px 18px;
+}
+
+.lesson-section {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.lesson-section > summary {
+  grid-template-columns: 44px minmax(0, 1fr);
+  padding: 14px;
+}
+
+.lesson-section > summary span {
+  align-items: center;
+  background: #eef2ff;
+  border-radius: 8px;
+  color: #3730a3;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 950;
+  height: 38px;
+  justify-content: center;
+}
+
+.lesson-section > summary strong,
+.lesson-section > summary small {
+  display: block;
+}
+
+.lesson-section > summary strong {
+  font-size: 17px;
+}
+
+.lesson-section > summary small {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+.section-body {
+  padding: 16px;
+}
+
+.section-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.section-grid article {
+  min-width: 0;
+}
+
+.deep-dive {
+  border-top: 0;
+}
+
+.deep-dive .section-body,
+.deep-grid {
+  padding: 0;
+}
+
+.deep-scenario {
+  margin: 14px 0 0;
+}
+
+.resource-pack .video-section {
+  border-top: 0;
+  padding: 0;
+}
+
+.resource-pack .resource-columns {
+  padding: 14px 0 0;
+}
+
+.resource-board {
+  padding-bottom: 0;
+}
+
+@media (max-width: 1180px) {
+  .academy-layout,
+  .hero,
+  .lesson-overview,
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .sidebar {
+    padding: 14px;
+  }
+
+  .brand {
+    margin-bottom: 14px;
+  }
+
+  .search-panel {
+    margin-bottom: 12px;
+  }
+
+  .module-nav,
+  .sidebar-actions {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .module-button {
+    min-width: 148px;
+  }
+
+  .sidebar-actions {
+    border-top: 0;
+    margin-top: 10px;
+    padding-top: 0;
+  }
+
+  .sidebar-actions a {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    flex: 0 0 auto;
+    padding: 9px 10px;
+  }
+
+  .course-map > summary,
+  .resource-board > summary,
+  .lesson-section > summary {
+    grid-template-columns: 1fr;
+  }
+
+  .hero,
+  .lesson-hero,
+  .lesson-overview,
+  .lesson-sections,
+  .section-body {
+    padding: 14px;
+  }
+
+  .lesson-sections {
+    padding-top: 0;
+  }
+}
+
 @media (max-width: 760px) {
   .academy-shell,
   .sidebar,
